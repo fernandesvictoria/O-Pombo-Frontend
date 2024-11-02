@@ -1,4 +1,4 @@
-export class ReportSeletor {
+export class DenunciaSeletor {
   idPruu!: string;
   idUsuario!: number;
   dataInicial!: Date;
