@@ -1,0 +1,57 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">    
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">O Pombo Social</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/home">Meu histórico</a>
+                </li>
+                <li class="nav-item dropdown" *ngIf="isAdmin">
+                    <a class="nav-link dropdown-toggle" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Pruus
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="home/pruus/detalhe">Postar</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/pruus">Listagem</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown"  *ngIf="isAdmin">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" 
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Usuários
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/usuario/detalhe">Cadastro</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/usuario">Listagem</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" (click)="logout()">Sair</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div *ngIf="usuarioAutenticado && !isAdmin">
+    Ol�, {{usuarioAutenticado?.nome}}
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title>">{{usuarioAutenticado.nome}} ({{usuarioAutenticado.email}})</h5>
+                        <p class="card-text">Meu score:  {{usuarioAutenticado.percentualVitorias}}%</p>
+                        <p class="card-text">Total de partidas: {{usuarioAutenticado8.totalPartidas}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<router-outlet></router-outlet>
