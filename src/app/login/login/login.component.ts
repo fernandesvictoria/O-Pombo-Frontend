@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { LoginService } from '../../shared/service/login.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { Usuario } from '../../shared/model/usuario';
+import { LoginService } from './../../shared/service/login.service';
 import { UsuarioDTO } from '../../shared/model/usuario-dto';
 
 @Component({
@@ -14,27 +13,33 @@ export class LoginComponent {
 
   public dto: UsuarioDTO = new UsuarioDTO();
 
-  constructor(
-    private loginService: LoginService,
-    private router: Router,
-  ) { }
+  constructor(private loginService: LoginService,
+    private router: Router) {
+  }
 
+  public realizarLogin() {
 
-  public login() {
-    this.loginService.autenticar(this.dto).subscribe(
-      (usuarioAutenticado: Usuario) => {
-        Swal.fire('Usuário autenticado com sucesso!', '', 'success');
-        localStorage.setItem(
-          'usuarioAutenticado',
-          JSON.stringify(usuarioAutenticado)
-        );
-        this.router.navigate(['/home']); // rever rota
-      },
-      (e) => {
-        Swal.fire({
-          title: 'Erro!',
-          text: 'Erro ao realizar login: ' + e.error.mensagem,
-          icon: 'error',
-        });
-      })}
+    this.loginService.autenticar(this.dto)
+      .subscribe({
+        next: jwt => {
+          Swal.fire('Sucesso', 'Usuário autenticado com sucesso', 'success');
+          let token: string = jwt.body + "";
+          localStorage.setItem('tokenUsuarioAutenticado', token);
+          this.router.navigate(['/home']);
+        },
+        error: erro => {
+          var mensagem: string;
+          if (erro.status == 401) {
+            mensagem = "Usuário ou senha inválidos, tente novamente";
+          } else {
+            mensagem = erro.error;
+          }
+          Swal.fire('Erro', mensagem, 'error');
+        }
+      });
+  }
+
+  public cadastro() {
+    this.router.navigate(['login/cadastro']);
+  }
 }
