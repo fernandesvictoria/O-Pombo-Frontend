@@ -8,7 +8,7 @@ import { UsuarioSeletor } from '../seletor/usuario.seletor';
   providedIn: 'root'
 })
 export class UsuarioService {
-  private readonly API = 'http://localhost:8080/pombo/usuario/';
+  private readonly API = 'http://localhost:8080/pombo/usuario';
 
   constructor(private httpClient: HttpClient) { }
 
