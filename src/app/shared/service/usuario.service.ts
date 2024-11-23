@@ -28,7 +28,7 @@ export class UsuarioService {
     return this.httpClient.get<Array<Usuario>>(this.API + '/todos')
   }
 
-  listarPorId(idUsuario: string): Observable<Usuario> {
+  pesquisarPorId(idUsuario: string): Observable<Usuario> {
     return this.httpClient.get<Usuario>(this.API + `/${idUsuario}`)
   }
 

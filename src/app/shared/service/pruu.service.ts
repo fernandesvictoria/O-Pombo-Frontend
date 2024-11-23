@@ -32,7 +32,7 @@ export class PruuService {
     return this.httpClient.get<Array<Pruu>>(this.API)
   }
   
-  listarPorId(idPruu: number): Observable<Pruu> {
+  pesquisarPorId(idPruu: number): Observable<Pruu> {
     return this.httpClient.get<Pruu>(this.API + `/${idPruu}`);
   }
 
