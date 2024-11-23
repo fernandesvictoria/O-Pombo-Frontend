@@ -8,31 +8,23 @@ import { DenunciaSeletor } from '../seletor/denuncia.seletor';
   providedIn: 'root'
 })
 export class DenunciaService {
-  private readonly API = 'http://localhost:8080/pombo/denuncia/';
+  private readonly API = 'http://localhost:8080/pombo/denuncias';
 
   constructor(private httpClient: HttpClient) { }
 
   salvar(novoDenuncia: Denuncia): Observable<Denuncia> {
-    return this.httpClient.post<Denuncia>(this.API + '/salvar', novoDenuncia)
+    return this.httpClient.post<Denuncia>(this.API + '/denunciar', novoDenuncia)
   }
 
-  editar(DenunciaEditado: Denuncia): Observable<boolean> {
-    return this.httpClient.put<boolean>(this.API + '/alterar', DenunciaEditado)
+  listarTodas(): Observable<Array<Denuncia>> {
+    return this.httpClient.get<Array<Denuncia>>(this.API);  
   }
 
-  excluir(DenunciaID: number): Observable<boolean> {
-    return this.httpClient.delete<boolean>(this.API + '/excluir/' + DenunciaID)
+  pesquisarPorId(idDenuncia: number): Observable<Denuncia> {
+    return this.httpClient.get<Denuncia>(this.API + `/${idDenuncia}`);
   }
 
-  consultarTodosDenuncias(): Observable<Array<Denuncia>> {
-    return this.httpClient.get<Array<Denuncia>>(this.API + '/todos')
-  }
-
-  listarComSeletor(seletor: DenunciaSeletor): Observable<Array<Denuncia>> {
-    return this.httpClient.post<Array<Denuncia>>(this.API + '/filtrar', seletor);
-  }
-
-  consultarDenunciaId(idDenuncia: number): Observable<Denuncia> {
-    return this.httpClient.get<Denuncia>(this.API + '/consultar/' + idDenuncia)
+  denunciar(denuncia: Denuncia): Observable<any> {
+    return this.httpClient.post<any>(this.API, denuncia);
   }
 }
