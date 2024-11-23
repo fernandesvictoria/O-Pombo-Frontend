@@ -20,23 +20,23 @@ export class UsuarioService {
     return this.httpClient.put<boolean>(this.API + '/alterar', UsuarioEditado)
   }
 
-  excluir(UsuarioID: number): Observable<boolean> {
-    return this.httpClient.delete<boolean>(this.API + '/excluir/' + UsuarioID)
+  excluir(idUsuario: string): Observable<boolean> {
+    return this.httpClient.delete<boolean>(this.API + '/excluir/' + idUsuario)
   }
 
   listarTodos(): Observable<Array<Usuario>> {
     return this.httpClient.get<Array<Usuario>>(this.API + '/todos')
   }
 
-  listarPorId(idUsuario: number): Observable<Usuario> {
-    return this.httpClient.get<Usuario>(this.API + '/consultar/' + idUsuario)
+  listarPorId(idUsuario: string): Observable<Usuario> {
+    return this.httpClient.get<Usuario>(this.API + `/${idUsuario}`)
   }
 
   listarComSeletor(seletor: UsuarioSeletor): Observable<Array<Usuario>> {
     return this.httpClient.post<Array<Usuario>>(this.API + '/filtrar', seletor);
   }
 
-  listarUsuariosQueCurtiramPruu(idPruu: number): Observable<Array<Usuario>> {
+  listarUsuariosQueCurtiramPruu(idPruu: string): Observable<Array<Usuario>> {
     return this.httpClient.get<Array<Usuario>>(this.API + `/${idPruu}/curtidas/`)
   }
 }
