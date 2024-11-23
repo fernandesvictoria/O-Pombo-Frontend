@@ -12,6 +12,10 @@ export class PruuService {
 
   constructor(private httpClient: HttpClient) { }
 
+  uploadImagem(pruuId: string, formData: FormData): Observable<any> {
+    return this.httpClient.post(`${this.API}/${pruuId}/upload`, formData);
+  }
+
   salvar(novoPruu: Pruu): Observable<Pruu> {
     return this.httpClient.post<Pruu>(this.API + '/salvar', novoPruu)
   }

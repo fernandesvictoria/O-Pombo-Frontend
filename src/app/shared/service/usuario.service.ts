@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Usuario } from '../model/usuario';
 import { Observable } from 'rxjs';
+import { Usuario } from '../model/usuario';
 import { UsuarioSeletor } from '../seletor/usuario.seletor';
 
 @Injectable({
@@ -12,8 +12,8 @@ export class UsuarioService {
 
   constructor(private httpClient: HttpClient) { }
 
-  salvar(novoUsuario: Usuario): Observable<Usuario> {
-    return this.httpClient.post<Usuario>(this.API + '/salvar', novoUsuario)
+  curtir(idUsuario: string, idPruu: string): Observable<any> {
+    return this.httpClient.post<any>(`${this.API}/${idUsuario}/curtir/${idPruu}`, {});
   }
 
   editar(UsuarioEditado: Usuario): Observable<boolean> {
@@ -24,15 +24,19 @@ export class UsuarioService {
     return this.httpClient.delete<boolean>(this.API + '/excluir/' + UsuarioID)
   }
 
-  consultarTodosUsuarios(): Observable<Array<Usuario>> {
+  listarTodos(): Observable<Array<Usuario>> {
     return this.httpClient.get<Array<Usuario>>(this.API + '/todos')
+  }
+
+  listarPorId(idUsuario: number): Observable<Usuario> {
+    return this.httpClient.get<Usuario>(this.API + '/consultar/' + idUsuario)
   }
 
   listarComSeletor(seletor: UsuarioSeletor): Observable<Array<Usuario>> {
     return this.httpClient.post<Array<Usuario>>(this.API + '/filtrar', seletor);
   }
 
-  consultarUsuarioId(idUsuario: number): Observable<Usuario> {
-    return this.httpClient.get<Usuario>(this.API + '/consultar/' + idUsuario)
-  }  
+  listarUsuariosQueCurtiramPruu(idPruu: number): Observable<Array<Usuario>> {
+    return this.httpClient.get<Array<Usuario>>(this.API + `/${idPruu}/curtidas/`)
+  }
 }
