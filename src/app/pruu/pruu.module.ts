@@ -7,11 +7,13 @@ import { PruuListagemComponent } from './pruu-listagem/pruu-listagem.component';
 import { PruuRoutingModule } from './pruu-routing.module';
 
 @NgModule({
-  declarations: [PruuCadastroComponent, PruuListagemComponent],
+  declarations: [],
   imports: [
     CommonModule,
     PruuRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    PruuListagemComponent,
+    PruuCadastroComponent
   ]
 })
 export class PruuModule { }

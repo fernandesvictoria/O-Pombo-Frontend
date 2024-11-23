@@ -4,7 +4,7 @@ import { PruuCadastroComponent } from './pruu-detalhe/pruu-cadastro.component';
 import { PruuListagemComponent } from './pruu-listagem/pruu-listagem.component';
 
 const routes: Routes = [
-  { path: '', component: PruuListagemComponent },
+  { path: 'pruu', component: PruuListagemComponent },
   { path: 'pruu/postar', component: PruuCadastroComponent },
 ];
 
