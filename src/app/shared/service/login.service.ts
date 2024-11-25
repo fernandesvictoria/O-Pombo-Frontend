@@ -19,7 +19,7 @@ export class LoginService {
       'authorization': authHeader
     });
 
-    return this.httpCliente.post<string>(`${this.API}/authenticate`, dto, {
+    return this.httpCliente.post<string>(`${this.API}/login`, dto, {
       headers,
       observe: 'response',
       responseType: 'text' as 'json'
@@ -27,9 +27,10 @@ export class LoginService {
   }
 
   cadastrar(usuario: Usuario): Observable<any> {
-    return this.httpCliente.post<any>(this.API + "/novo-usuario", usuario);
+    return this.httpCliente.post<any>(`${this.API}/novo`, usuario);
   }
 
+  // COLOCAR NO NAVBAR PRA DESLOGAR
   sair() {
     localStorage.removeItem('tokenUsuarioAutenticado');
   }

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Usuario } from '../../../shared/model/usuario';
-import { UsuarioDTO } from '../../../shared/model/usuario-dto';
-import { LoginService } from '../../../shared/service/login.service';
+import { Usuario } from '../../shared/model/usuario';
+import { UsuarioDTO } from '../../shared/model/usuario-dto';
+import { LoginService } from '../../shared/service/login.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -27,7 +27,7 @@ export class LoginComponent {
         Swal.fire('Sucesso', 'Usuário autenticado com sucesso', 'success');
         let token: string = jwt.body + "";
         localStorage.setItem('tokenUsuarioAutenticado', token);
-        this.router.navigate(['/pruu']);
+        this.router.navigate(['pruus']);
       },
       error: erro => {
         var mensagem: string;

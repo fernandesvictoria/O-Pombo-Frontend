@@ -1,11 +1,12 @@
+import { Motivo } from "./enum/motivo";
+import { StatusDenuncia } from "./enum/status-denuncia";
 import { Pruu } from "./pruu";
 import { Usuario } from "./usuario";
 
 export class Denuncia {
   id!: number;
-  dataCriacao!: Date;
   pruu!: Pruu;
-  user!: Usuario;
-  motivo!: string;
-  analisada!: boolean;
+  usuario!: Usuario;
+  motivo!: Motivo;
+  status: StatusDenuncia = StatusDenuncia.PENDENTE;
 }

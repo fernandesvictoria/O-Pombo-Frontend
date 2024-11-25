@@ -1,1 +1,49 @@
-<p>pruu-listagem works!</p>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Lista de Pruus</h3>
+      <div class="card">
+        <div class="card-body">
+          <h5>Filtros</h5>
+          <form (ngSubmit)="aplicarFiltros()">
+            <div class="row">
+              <div class="col-md-3">
+                <label for="criadoEmInicio" class="form-label">Período de Criação (Início)</label>
+                <input type="date" id="criadoEmInicio" [(ngModel)]="pruuSeletor.criadoEmInicio" name="criadoEmInicio" class="form-control">
+              </div>
+              <div class="col-md-3">
+                <label for="criadoEmFim" class="form-label">Período de Criação (Fim)</label>
+                <input type="date" id="criadoEmFim" [(ngModel)]="pruuSeletor.criadoEmFim" name="criadoEmFim" class="form-control">
+              </div>
+              <div class="col-md-3">
+                <label for="usuario" class="form-label">Nome do Usuário</label>
+                <input type="text" id="usuario" [(ngModel)]="pruuSeletor.idUsuario" name="idUsuario" class="form-control" placeholder="Nome do usuário">
+              </div>
+              <div class="col-md-3">
+                <label for="texto" class="form-label">Texto</label>
+                <input type="text" id="texto" [(ngModel)]="pruuSeletor.texto" name="texto" class="form-control" placeholder="Buscar por texto">
+              </div>
+            </div>
+            <div class="mt-3">
+              <button type="submit" class="btn btn-primary">Aplicar Filtros</button>
+              <button type="button" class="btn btn-secondary" (click)="limparFiltros()">Limpar Filtros</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div *ngIf="pruus.length > 0" class="mt-4">
+        <div *ngFor="let pruu of pruus" class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">{{ pruu.texto }}</h5>
+            <p class="card-text">{{ pruu.texto }}</p>
+            <p class="card-text"><small class="text-muted">Criado por: {{ pruu.usuario.nome }} em {{ pruu.criadoEm | date }}</small></p>
+            <button class="btn btn-outline-primary" (click)="curtir(pruu)">
+              {{ pruu.usuariosQueCurtiram.some(usuario => usuario.id === usuarioLogado.id) ? 'Descurtir' : 'Curtir' }}
+            </button>
+            <p class="mt-2">Curtidas: {{ pruu.quantidadeCurtidas }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

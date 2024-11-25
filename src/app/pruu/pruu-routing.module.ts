@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PruuCadastroComponent } from './pruu-detalhe/pruu-cadastro.component';
+import { PruuCadastroComponent } from './pruu-cadastro/pruu-cadastro.component';
 import { PruuListagemComponent } from './pruu-listagem/pruu-listagem.component';
 
 const routes: Routes = [
-  { path: 'pruu', component: PruuListagemComponent },
-  { path: 'pruu/postar', component: PruuCadastroComponent },
+  { path: '', component: PruuListagemComponent },
+  { path: '/postar', component: PruuCadastroComponent },
 ];
 
 @NgModule({

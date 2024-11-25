@@ -1,8 +1,8 @@
 import { BaseSeletor } from "./base-seletor";
 
 export class PruuSeletor extends BaseSeletor {
-  nomeUsuario!: string;
+  idUsuario!: string;
   texto!: string;
-  dataInicial!: Date;
-  dataFinal!: Date;
+  criadoEmInicio!: Date;
+  criadoEmFim!: Date;
 }

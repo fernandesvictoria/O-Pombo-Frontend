@@ -3,11 +3,12 @@ import { Usuario } from '../../shared/model/usuario';
 import { LoginService } from '../../shared/service/login.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { Perfil } from '../../shared/model/enum/perfil'; // Importe a enumeração de perfis
 
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.component.html',
-  styleUrl: './cadastro.component.scss'
+  styleUrls: ['./cadastro.component.scss']
 })
 export class CadastroComponent {
   public usuario: Usuario = new Usuario();

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Denuncia } from '../model/denuncia';
 import { Observable } from 'rxjs';
 import { DenunciaSeletor } from '../seletor/denuncia.seletor';
+import { StatusDenuncia } from '../model/enum/status-denuncia';
 
 @Injectable({
   providedIn: 'root'
@@ -12,19 +13,23 @@ export class DenunciaService {
 
   constructor(private httpClient: HttpClient) { }
 
-  salvar(novoDenuncia: Denuncia): Observable<Denuncia> {
-    return this.httpClient.post<Denuncia>(this.API + '/denunciar', novoDenuncia)
+  cadastrar(novoDenuncia: Denuncia): Observable<Denuncia> {
+    return this.httpClient.post<Denuncia>(`${this.API}/cadastrar`, novoDenuncia)
   }
 
-  listarTodas(): Observable<Array<Denuncia>> {
-    return this.httpClient.get<Array<Denuncia>>(this.API);  
+  atualizar(idDenuncia: string, status: StatusDenuncia): Observable<Denuncia> {
+    return this.httpClient.put<Denuncia>(`${this.API}/atualizar/${idDenuncia}`, status)
+  }
+
+  excluir(idDenuncia: string): Observable<boolean> {
+    return this.httpClient.delete<boolean>(`${this.API}/excluir/${idDenuncia}`)
   }
 
   pesquisarPorId(idDenuncia: number): Observable<Denuncia> {
     return this.httpClient.get<Denuncia>(this.API + `/${idDenuncia}`);
   }
 
-  denunciar(denuncia: Denuncia): Observable<any> {
-    return this.httpClient.post<any>(this.API, denuncia);
+  pesquisarComFiltro(seletor: DenunciaSeletor): Observable<Array<Denuncia>> {
+    return this.httpClient.post<Array<Denuncia>>(`${this.API}/filtrar`, seletor);
   }
 }

@@ -2,12 +2,13 @@ import { Denuncia } from "./denuncia";
 import { Usuario } from "./usuario";
 
 export class Pruu {
-  uuid!: string;
-  texto!: string;
-  dataCriacao!: Date;
-  quantidadeLikes!: number;
+  id!: string;
   usuario!: Usuario;
-  likes!: Usuario[];
-  bloqueado!: boolean;
+  texto!: string;
+  usuariosQueCurtiram!: Usuario[];
   denuncias!: Denuncia[];
+  imagem!: string; // URL da imagem
+  quantidadeCurtidas!: number;
+  quantidadeDenuncias!: number;
+  bloqueado!: boolean;
 }

@@ -1,16 +1,17 @@
+import { Denuncia } from "./denuncia";
 import { Perfil } from "./enum/perfil";
 import { Pruu } from "./pruu";
 
 export class Usuario {
-  uuid!: string;
+  id!: string;
   nome!: string;
   email!: string;
-  senha!: string;
   cpf!: string;
+  senha!: string;
+  fotoDePerfil!: string; // URL da imagem
   perfil!: Perfil;
   idSessao!: string;
-  imagemBase64!: string;
   isAdmin!: boolean;
   pruusCriados!: Array<Pruu>;
-  pruusCurtidos!: Array<Pruu>;
+  denunciasCriadas!: Array<Denuncia>;
 }

@@ -1,6 +1,6 @@
 import { HttpErrorResponse, HttpInterceptorFn } from "@angular/common/http";
 import { inject } from "@angular/core";
-import { Router } from "express";
+import { Router } from "@angular/router";
 import { catchError, throwError } from "rxjs";
 
 export const RequestInterceptor: HttpInterceptorFn = (req, next) => {
@@ -9,6 +9,7 @@ export const RequestInterceptor: HttpInterceptorFn = (req, next) => {
 
   if (typeof localStorage !== 'undefined') {
     const tokenUsuarioAutenticado = localStorage.getItem('tokenUsuarioAutenticado');
+   
     if (tokenUsuarioAutenticado) {
       authReq = req.clone({
         setHeaders: {
