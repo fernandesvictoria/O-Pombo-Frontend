@@ -27,7 +27,7 @@ export class LoginComponent {
         Swal.fire('Sucesso', 'Usuário autenticado com sucesso', 'success');
         let token: string = jwt.body + "";
         localStorage.setItem('tokenUsuarioAutenticado', token);
-        this.router.navigate(['pruus']);
+        this.router.navigate(['pruu']);
       },
       error: erro => {
         var mensagem: string;

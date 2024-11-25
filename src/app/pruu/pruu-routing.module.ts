@@ -5,7 +5,7 @@ import { PruuListagemComponent } from './pruu-listagem/pruu-listagem.component';
 
 const routes: Routes = [
   { path: '', component: PruuListagemComponent },
-  { path: '/postar', component: PruuCadastroComponent },
+  { path: 'cadastrar', component: PruuCadastroComponent },
 ];
 
 @NgModule({

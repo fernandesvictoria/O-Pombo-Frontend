@@ -12,19 +12,24 @@ import { PruuService } from '../../shared/service/pruu.service';
 })
 export class PruuListagemComponent implements OnInit {
   pruus: Pruu[] = [];
-  pruuSeletor: PruuSeletor = new PruuSeletor();
   filtroAtivo: boolean = false;
-
+  pruuSeletor: PruuSeletor = new PruuSeletor();
+  totalPaginas!: number = 0;
+  readonly itensPorPagina: number = 5;
+  
   usuarioAutenticado!: Usuario;
-
+  
   constructor(private pruuService: PruuService, private router: Router) { }
-
+  
   ngOnInit(): void {
+    this.pruuSeletor.limite = this.itensPorPagina;
+    this.pruuSeletor.pagina = 1;
+
     this.pesquisarTodos();
   }
 
   pesquisarTodos(): void {
-    this.pruuService.pesquisarTodos().subscribe({
+    this.pruuService.pesquisarTodos(this.pruuSeletor).subscribe({
       next: pruus => this.pruus = pruus,
       error: erro => console.error('Erro ao buscar Pruus', erro)
     });
