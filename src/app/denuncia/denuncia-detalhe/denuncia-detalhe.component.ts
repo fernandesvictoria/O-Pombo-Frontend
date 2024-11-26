@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Denuncia } from '../../shared/model/denuncia';
-import { DenunciaService } from '../../shared/service/denuncia.service';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Denuncia } from "../../shared/model/denuncia";
+import { Pruu } from "../../shared/model/pruu";
+import { DenunciaService } from "../../shared/service/denuncia.service";
+import { PruuService } from "../../shared/service/pruu.service";
 
 @Component({
   selector: 'app-denuncia-detalhe',
@@ -9,53 +11,42 @@ import { DenunciaService } from '../../shared/service/denuncia.service';
 })
 export class DenunciaDetalheComponent implements OnInit {
   denuncia!: Denuncia;
+  pruusDenunciados: Pruu[] = [];
   idDenuncia!: number;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private denunciaService: DenunciaService
+    private denunciaService: DenunciaService,
+    private pruuService: PruuService
   ) { }
 
   ngOnInit(): void {
-    // obter o ID da denúncia a partir da rota
     this.idDenuncia = Number(this.route.snapshot.paramMap.get('id'));
-    //this.carregarDenuncia();
+    this.carregarDenuncia();
+    this.carregarPruusDenunciados();
   }
 
-  // carregarDenuncia(): void {
-  //   this.denunciaService.pesquisarPorId(this.idDenuncia).subscribe({
-  //     next: (denuncia) => this.denuncia = denuncia,
-  //     error: (erro) => {
-  //       console.error('Erro ao carregar denúncia', erro);
-  //       this.voltarParaListagem();
-  //     }
-  //   });
-  // }
+  carregarDenuncia(): void {
+    this.denunciaService.pesquisarPorId(this.idDenuncia).subscribe({
+      next: (denuncia) => (this.denuncia = denuncia),
+      error: (erro) => {
+        console.error('Erro ao carregar denúncia', erro);
+        this.voltarParaListagem();
+      },
+    });
+  }
 
-  // voltarParaListagem(): void {
-  //   this.router.navigate(['/denuncia']);
-  // }
+  carregarPruusDenunciados(): void {
+    this.pruuService
+      .pesquisarComFiltro({ idDenuncia: this.idDenuncia } as any) // Ajuste o seletor conforme necessário
+      .subscribe({
+        next: (pruus) => (this.pruusDenunciados = pruus),
+        error: (erro) => console.error('Erro ao carregar pruus denunciados', erro),
+      });
+  }
 
-  // excluirDenuncia(): void {
-  //   if (confirm('Tem certeza que deseja excluir esta denúncia?')) {
-  //     this.denunciaService.excluir(this.idDenuncia.toString()).subscribe({
-  //       next: () => {
-  //         console.log('Denúncia excluída com sucesso!');
-  //         this.voltarParaListagem();
-  //       },
-  //       error: (erro) => console.error('Erro ao excluir denúncia', erro)
-  //     });
-  //   }
-  // }
-
-  // atualizarStatus(novoStatus: string): void {
-  //   this.denunciaService.atualizar(this.idDenuncia.toString(), novoStatus as any).subscribe({
-  //     next: (denunciaAtualizada) => {
-  //       console.log('Status atualizado com sucesso:', denunciaAtualizada);
-  //       this.carregarDenuncia();
-  //     },
-  //     error: (erro) => console.error('Erro ao atualizar status', erro)
-  //   });
-  // }
+  voltarParaListagem(): void {
+    this.router.navigate(['/denuncia']);
+  }
 }
