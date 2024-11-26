@@ -14,7 +14,7 @@ export class PruuListagemComponent implements OnInit {
   pruus: Pruu[] = [];
   filtroAtivo: boolean = false;
   pruuSeletor: PruuSeletor = new PruuSeletor();
-  totalPaginas!: number = 0;
+  totalPaginas: number = 0;
   readonly itensPorPagina: number = 5;
   
   usuarioAutenticado!: Usuario;
