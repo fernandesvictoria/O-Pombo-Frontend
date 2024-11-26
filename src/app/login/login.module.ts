@@ -10,15 +10,12 @@ import { LoginComponent } from './login/login.component';
 import { CadastroComponent } from './cadastro/cadastro.component';
 
 @NgModule({
-  declarations: [
-    LoginComponent,
-    CadastroComponent,
-  ],
+  declarations: [],
   imports: [
     LoginRoutingModule,
-    FormsModule,
     CommonModule,
-    RouterModule
+    RouterModule,
+    FormsModule, 
   ],
   providers: [
     provideHttpClient(

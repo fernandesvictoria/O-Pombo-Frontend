@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Usuario } from '../../shared/model/usuario';
 import { UsuarioDTO } from '../../shared/model/usuario-dto';
 import { LoginService } from '../../shared/service/login.service';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
+  standalone: true,
+  imports: [FormsModule, RouterModule, CommonModule],
 })
 export class LoginComponent {
   public dto: UsuarioDTO = new UsuarioDTO();
