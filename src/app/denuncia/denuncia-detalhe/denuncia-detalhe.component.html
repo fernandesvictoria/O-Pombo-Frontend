@@ -1,0 +1,28 @@
+<!--  <app-menu></app-menu>
+<div style="background-color: #080404; min-height: 100vh; padding: 50px; margin-left: 25%; color: white;">
+  Formulário de Denúncia
+  <h2 class="text-center mb-4">Denunciar Postagem</h2>
+  <div class="pruu-info card p-4 mb-4" style="background-color: #202327; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <h3 class="mb-3">Informações da Postagem</h3>
+    <p><strong>Data de Criação:</strong> {{ pruu.dataCriacao | date }}</p>
+    <p><strong>Título:</strong> {{ pruu.usuario.nome }}</p>
+    <p><strong>Descrição:</strong> {{ pruu.texto }}</p>
+  </div>
+
+  <div class="denuncia-info card p-4" style="background-color: #202327; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <form (ngSubmit)="inserir()" class="d-flex flex-column align-items-center">
+
+      <div class="form-group mb-3" style="width: 100%; max-width: 500px;">
+        <label for="motivo" class="text-light mb-2">Motivo</label>
+        <select class="form-control border-dark text-white" name="motivo" [(ngModel)]="denuncia.motivo" required
+          style="background-color: #333; border-radius: 20px;">
+          <option *ngFor="let mot of motivos" [value]="mot">{{ mot }}</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100 mt-3" style="background-color: #1d99ed; border-radius: 20px; padding: 12px;">
+        Enviar Denúncia
+      </button>
+    </form>
+  </div>
+</div> -->
