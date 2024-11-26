@@ -1,36 +1,35 @@
-<div class="container-fluid g-5">
-  <div class="row text-center p-2 align-items-center justify-content-center">
+<div class="container-fluid g-5 border-black" style="background-color: #282c34; min-height: 100vh; overflow-x: hidden;">
+  <div class="row text-center p-2 align-items-center justify-content-center border-dark">
     <div class="col col-md-4 pt-5">
-      <div class="card border-dark shadow round">
-        <div class="card-header bg-primary">
-          <h3 class="text-center text-white pt-2">Bem-vindo ao Pombo Social!</h3>
+      <div class="card border-dark shadow " style="border-radius: 20px; overflow: hidden;">
+        <div class="card-header bg-black rounded-top border-black">
+          <img src="assets/images/pigeon.png" alt="lago" class="img-fluid mx-auto d-block" style="max-width: 100px;">
+          <h3 class="text-center text-white pt-2">Entrar no Pombo</h3>
         </div>
-        <div class="card-body">
+        <div class="card-body bg-black">
           <form #ngForm="ngForm">
-            <div class="mb-1">
-              <label class="form-label" for="email">E-mail</label>
-              <input [ngClass]="(!dto.login && ngForm.dirty) ? 'form-control is-invalid' : 'form-control'" [(ngModel)]="dto.login" type="text" class="form-control border-dark" name="email" required />
-              <div class="invalid-feedback"> Informe o email</div>
+            <div class="mb-3">
+              <input [ngClass]="(!dto.login && ngForm.dirty) ? 'form-control is-invalid' : 'form-control'"
+                [(ngModel)]="dto.login" type="text" class="form-control border-dark" name="email" placeholder="E-mail"
+                style="width: 100%; border-radius: 20px; text-align: center; padding: 10px;" required />
+              <div class="invalid-feedback">Informe o email</div>
             </div>
             <div class="mb-3">
-              <label class="form-label" for="senha">Senha</label>
-              <input [ngClass]="(!dto.senha && ngForm.dirty) ? 'form-control is-invalid' : 'form-control'" [(ngModel)]="dto.senha" type="password" class="form-control border-dark" name="senha" required>
-              <div class="invalid-feedback"> Informe a senha</div>
+              <input [ngClass]="(!dto.senha && ngForm.dirty) ? 'form-control is-invalid' : 'form-control'"
+                [(ngModel)]="dto.senha" type="password" class="form-control border-dark" name="senha" placeholder="Senha" style="width: 100%; border-radius: 20px; text-align: center; padding: 10px;" required>
+              <div class="invalid-feedback">Informe a senha</div>
             </div>
             <div class="text-center">
-              <button type="button" class="btn btn-primary border-dark" (click)="logar()" [disabled]="!ngForm.valid">
+              <button type="button" class="btn btn-primary "
+                style="background-color: #1d99ed; padding: 10px 20px; border: 1px solid #000; border-radius: 30px; cursor: pointer; width: 60%;"
+                (click)="logar()" [disabled]="!ngForm.valid">
                 Entrar
               </button>
-              <div class="pt-3">
-                <span class="align-items-start">
-                  <p class="text-primary">OU</p>
-                </span>
-              </div>
+
               <div>
                 <span class="align-items-start">
-                  <button type="button" class="btn btn-warning border-dark" [routerLink]="['cadastro']">
-                    Cadastre-se
-                  </button>
+                  <p class="text-white mt-3 mb-0">Não tem uma conta? <a [routerLink]="['cadastro']"
+                      class="btn-link d-inline">Cadastre-se</a></p>
                 </span>
               </div>
             </div>
