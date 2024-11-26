@@ -40,6 +40,3 @@ export class MenuComponent implements OnInit {
     return this.usuarioAdmin;
   }
 }
-
-
-
