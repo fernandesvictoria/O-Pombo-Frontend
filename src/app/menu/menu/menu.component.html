@@ -1,45 +1,30 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">O Pombo Social</a>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="/home">Meu histórico</a>
-        </li>
-        <li class="nav-item dropdown" *ngIf="isAdmin">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Pruus
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="home/pruus/detalhe">Postar</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="/pruus">Listagem</a></li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown" *ngIf="isAdmin">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Usuários
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/usuario/detalhe">Cadastro</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="/usuario">Listagem</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" (click)="logout()">Sair</a>
-        </li>
-      </ul>
+
+<div class="container-fluid" style="min-height: 100vh; padding: 0; position: fixed; z-index: 1; width: 25%;">
+  <!-- Menu Lateral -->
+  <div style="background-color: #080404; height: 100vh; display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid #333232; position: fixed; width: 25%;">
+    <!-- Conteúdo do Menu Lateral -->
+    <div>
+      <div class="py-5" style="padding-left: 10px;">
+        <img src="assets/images/pigeon.png" alt="Logo Pombo" class="img-fluid" style="max-width: 70px; margin-left: 10px;">
+        <h3 class="text-white pt-3 text-start" style="padding-left: 22px;">Bem-vindo</h3>
+      </div>
+      <nav>
+        <a href="/pruu" class="w-100 mb-5 text-white fw-bold text-start d-block" style="text-decoration: none; font-size: 1.1rem; padding-left: 35px;">Feed</a>
+        <a href="#" class="w-100 mb-5 text-white fw-bold text-start d-block" style="text-decoration: none; font-size: 1.1rem; padding-left: 35px;">Meu Histórico</a>
+        <a href="/usuarios/detalhe" class="w-100 mb-3 text-white fw-bold text-start d-block" style="text-decoration: none; font-size: 1.1rem; padding-left: 35px;">Editar Perfil</a>
+      </nav>
+    </div>
+    <div class="d-flex flex-column align-items-center mb-4" style="margin-top: auto;">
+      <a href="/pruu/cadastrar" class="btn btn-primary w-75 mb-3" style="background-color: #1d99ed; border-radius: 20px;">Post</a>
+      <button (click)="logout()" class="btn btn-danger w-75 mb-3" style="border-radius: 20px;">Logout</button>
     </div>
   </div>
-</nav>
+</div>
 
-<div *ngIf="usuarioAutenticado && !isAdmin">
-  Ol�, {{usuarioAutenticado?.nome}}
+
+
+<!-- <div *ngIf="UsuarioAutenticado && !isAdmin">
+  Ol�, {{suarioAutenticado?.nome}}
 
   <div class="container">
     <div class="row">
@@ -54,6 +39,6 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
-<router-outlet></router-outlet>
+<!-- <router-outlet></router-outlet> -->
