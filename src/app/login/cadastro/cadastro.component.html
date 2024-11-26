@@ -1,28 +1,51 @@
-<div class="container mt-5">
-  <h2>Cadastro de Usuário</h2>
-  <form (ngSubmit)="cadastrar()">
-    <div class="form-group">
-      <label for="nome">Nome</label>
-      <input type="text" id="nome" class="form-control" [(ngModel)]="usuario.nome" name="nome" required>
+<div class="container-fluid g-5" style="background-color: #282c34; min-height: 100vh;">
+  <div class="row text-center p-2 align-items-center justify-content-center">
+    <div class="col col-md-4 pt-5">
+      <div class="card border-dark rounded-3" style="border-radius: 20px; overflow: hidden; width: 500px;">
+        <div class="card-header bg-black">
+          <img src="assets/images/pigeon.png" alt="lago" class="img-fluid mx-auto d-block" style="max-width: 100px;">
+          <h3 class="text-white pt-3">Cadastro de Usuário</h3>
+        </div>
+        <div class="card-body bg-black d-flex flex-column align-items-center">
+          <form (ngSubmit)="cadastrar()" style="width: 100%; max-width: 400px;">
+            <div class="mb-3">
+              <input [(ngModel)]="usuario.nome" type="text" class="form-control border-dark" name="nome" placeholder="Nome"
+                style="width: 100%; border-radius: 20px; text-align: center; padding: 10px;" required />
+                <div class="invalid-feedback"> Informe seu nome</div>
+            </div>
+            <div class="mb-3">
+              <input [(ngModel)]="usuario.email" type="email" class="form-control border-dark" name="email" placeholder="E-mail"
+                style="width: 100%; border-radius: 20px; text-align: center; padding: 10px;" required />
+                <div class="invalid-feedback"> Informe o email</div>
+            </div>
+            <div class="mb-3">
+              <input [(ngModel)]="usuario.cpf" type="text" class="form-control border-dark" name="cpf" placeholder="CPF"
+                style="width: 100%; border-radius: 20px; text-align: center; padding: 10px;" required />
+                <div class="invalid-feedback">CPF é obrigatório</div>
+            </div>
+            <div class="mb-3">
+              <input [(ngModel)]="usuario.senha" type="password" class="form-control border-dark" name="senha"
+                placeholder="Senha" style="width: 100%; border-radius: 20px; text-align: center; padding: 10px;" required />
+                <div class="invalid-feedback">Escolha uma senha</div>
+            </div>
+            <div class="mb-3">
+              <input [(ngModel)]="usuario.fotoDePerfil" type="text" class="form-control border-dark" name="fotoDePerfil"
+                placeholder="Foto de Perfil (URL)" style="width: 100%; border-radius: 20px; text-align: center; padding: 10px;" />
+            </div>
+            <div class="text-center">
+
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary" style="background-color: #1d99ed; padding: 10px 20px; border: 1px solid #000; border-radius: 30px; cursor: pointer; width: 60%;">Cadastrar</button>
+              </div>
+              <p class="text-white mt-3">Já tem uma conta? <a [routerLink]="'/login'" class="btn-link d-inline">Faça login</a>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="email">E-mail</label>
-      <input type="email" id="email" class="form-control" [(ngModel)]="usuario.email" name="email" required>
-    </div>
-    <div class="form-group">
-      <label for="cpf">CPF</label>
-      <input type="text" id="cpf" class="form-control" [(ngModel)]="usuario.cpf" name="cpf" required>
-    </div>
-    <div class="form-group">
-      <label for="senha">Senha</label>
-      <input type="password" id="senha" class="form-control" [(ngModel)]="usuario.senha" name="senha" required>
-    </div>
-    <div class="form-group">
-      <label for="fotoDePerfil">Foto de Perfil (URL)</label>
-      <input type="text" id="fotoDePerfil" class="form-control" [(ngModel)]="usuario.fotoDePerfil" name="fotoDePerfil">
-    </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary">Cadastrar</button>
-    </div>
-  </form>
+  </div>
 </div>
+
+
+
