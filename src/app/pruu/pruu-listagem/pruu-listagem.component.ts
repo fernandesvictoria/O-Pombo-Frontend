@@ -75,7 +75,7 @@ export class PruuListagemComponent implements OnInit {
     });
   }
 
-  criarDenuncia(pruu: Pruu, motivo: Motivo): void {
+  denunciar(pruu: Pruu, motivo: Motivo): void {
     const novaDenuncia: Denuncia = {
       id: 0,
       pruu: pruu,
