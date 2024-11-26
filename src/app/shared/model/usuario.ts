@@ -1,6 +1,6 @@
-import { Denuncia } from "./denuncia";
-import { Perfil } from "./enum/perfil";
-import { Pruu } from "./pruu";
+import { Denuncia } from './denuncia';
+import { Perfil } from './enum/perfil';
+import { Pruu } from './pruu';
 
 export class Usuario {
   id!: string;
