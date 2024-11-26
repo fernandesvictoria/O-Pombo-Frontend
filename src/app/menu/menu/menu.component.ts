@@ -34,6 +34,11 @@ export class MenuComponent implements OnInit {
     localStorage.removeItem('tokenUsuarioAutenticado');
     this.router.navigate(['/login']);
   }
+
+  public isAdmin(): boolean {
+    this.usuarioAdmin = this.service.isAdmin();
+    return this.usuarioAdmin;
+  }
 }
 
 
