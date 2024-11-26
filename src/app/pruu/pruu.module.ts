@@ -6,6 +6,9 @@ import { PruuRoutingModule } from './pruu-routing.module';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { RequestInterceptor } from '../auth/request.interceptor';
 import { PruuListagemComponent } from './pruu-listagem/pruu-listagem.component';
+import { FormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
+import { MenuModule } from '../menu/menu.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +17,10 @@ import { PruuListagemComponent } from './pruu-listagem/pruu-listagem.component';
   ],
   imports: [
     CommonModule,
-    PruuRoutingModule
+    PruuRoutingModule,
+    FormsModule,
+    SharedModule,
+    MenuModule
   ],
   providers: [
     provideHttpClient(

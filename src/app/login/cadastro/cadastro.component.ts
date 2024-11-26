@@ -13,6 +13,7 @@ export class CadastroComponent {
   public usuario: Usuario = new Usuario();
   public idUsuario!: number;
 
+
   constructor(
     private service: LoginService,
     private router: Router,
