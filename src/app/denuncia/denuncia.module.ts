@@ -6,9 +6,10 @@ import { DenunciaDetalheComponent } from './denuncia-detalhe/denuncia-detalhe.co
 import { DenunciaListagemComponent } from './denuncia-listagem/denuncia-listagem.component';
 import { DenunciaRoutingModule } from './denuncia-routing.module';
 import { MenuModule } from '../menu/menu.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [DenunciaDetalheComponent, DenunciaListagemComponent],
-  imports: [CommonModule, DenunciaRoutingModule, HttpClientModule, MenuModule],
+  imports: [CommonModule, DenunciaRoutingModule, HttpClientModule, MenuModule, FormsModule],
 })
 export class DenunciaModule {}

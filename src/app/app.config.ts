@@ -5,6 +5,8 @@ import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/
 import { provideClientHydration } from '@angular/platform-browser';
 import { routes } from './app.routes';
 import { RequestInterceptor } from './auth/request.interceptor';
+import { FormsModule } from '@angular/forms';
+import { importProvidersFrom } from '@angular/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [

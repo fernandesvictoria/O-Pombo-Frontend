@@ -1,5 +1,6 @@
+import { Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { CadastroComponent } from './login/cadastro/cadastro.component';
 import { LoginComponent } from './login/login/login.component';
 
@@ -22,9 +23,3 @@ export const routes: Routes = [
   { path: 'denuncia', loadChildren: () => import('./denuncia/denuncia.module').then(m => m.DenunciaModule) },
   { path: '**', redirectTo: 'pruu' },
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }

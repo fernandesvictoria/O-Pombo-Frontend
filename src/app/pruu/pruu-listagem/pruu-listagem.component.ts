@@ -4,21 +4,16 @@ import { Pruu } from '../../shared/model/pruu';
 import { Usuario } from '../../shared/model/usuario';
 import { PruuSeletor } from '../../shared/seletor/pruu.seletor';
 import { PruuService } from '../../shared/service/pruu.service';
+import { Denuncia } from '../../shared/model/denuncia';
+import { DenunciaService } from '../../shared/service/denuncia.service';
+import { Motivo } from '../../shared/model/enum/motivo';
+import { StatusDenuncia } from '../../shared/model/enum/status-denuncia';
 
 @Component({
   selector: 'app-pruu-listagem',
   templateUrl: './pruu-listagem.component.html',
 })
 export class PruuListagemComponent implements OnInit {
-isCurtido: any;
-
-
-denunciar(arg0: any) {
- throw new Error('Method not implemented.');
-}
-
-
-
   pruus: Pruu[] = [];
   filtroAtivo: boolean = false;
   pruuSeletor: PruuSeletor = new PruuSeletor();
@@ -27,8 +22,11 @@ denunciar(arg0: any) {
 
   usuarioAutenticado!: Usuario;
 
-
-  constructor(private pruuService: PruuService, private router: Router) { }
+  constructor(
+    private pruuService: PruuService,
+    private denunciaService: DenunciaService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.pruuSeletor.limite = this.itensPorPagina;
@@ -74,6 +72,21 @@ denunciar(arg0: any) {
     this.pruuService.curtir(pruu.id, this.usuarioAutenticado.id).subscribe({
       next: () => console.log('Ação de curtir/descurtir realizada com sucesso!'),
       error: erro => console.error('Erro ao curtir/descurtir', erro)
+    });
+  }
+
+  criarDenuncia(pruu: Pruu, motivo: Motivo): void {
+    const novaDenuncia: Denuncia = {
+      id: 0,
+      pruu: pruu,
+      usuario: this.usuarioAutenticado,
+      motivo: motivo,
+      status: StatusDenuncia.PENDENTE
+    };
+
+    this.denunciaService.cadastrar(novaDenuncia).subscribe({
+      next: () => console.log('Denúncia criada com sucesso!'),
+      error: erro => console.error('Erro ao criar denúncia', erro)
     });
   }
 }

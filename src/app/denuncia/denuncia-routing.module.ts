@@ -9,7 +9,7 @@ const routes: Routes = [
     path: '', component: DenunciaListagemComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'cadastro', component: DenunciaDetalheComponent
+    path: '/:id', component: DenunciaDetalheComponent
   },
 ];
 
