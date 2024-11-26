@@ -4,29 +4,20 @@
   <form class="d-flex flex-column align-items-center mb-4">
     <div class="d-flex gap-2 mb-3 justify-content-center">
       <!-- Filtro por Data -->
-      <input type="date" class="form-control border-dark text-white" [(ngModel)]="pruuSeletor.criadoEmInicio"
-        name="dataCriacao" placeholder="Data" required
-        style="background-color: #202327; border-radius: 20px; width: 250px;" />
-      <input type="date" class="form-control border-dark text-white" [(ngModel)]="pruuSeletor.criadoEmFim"
-        name="dataCriacao" placeholder="Data" required
-        style="background-color: #202327; border-radius: 20px; width: 250px;" />
+      <input type="date" class="form-control border-dark text-white" [(ngModel)]="pruuSeletor.criadoEmInicio" name="dataCriacao" placeholder="Data" required style="background-color: #202327; border-radius: 20px; width: 250px;" />
+      <input type="date" class="form-control border-dark text-white" [(ngModel)]="pruuSeletor.criadoEmFim" name="dataCriacao" placeholder="Data" required style="background-color: #202327; border-radius: 20px; width: 250px;" />
 
       <!-- Filtro por Usuário -->
-      <input type="text" class="form-control border-dark text-white" [(ngModel)]="pruuSeletor.idUsuario" name="usuario"
-        placeholder="Usuário" required style="background-color: #202327; border-radius: 20px; width: 250px;" />
+      <input type="text" class="form-control border-dark text-white" [(ngModel)]="pruuSeletor.idUsuario" name="usuario" placeholder="Usuário" required style="background-color: #202327; border-radius: 20px; width: 250px;" />
     </div>
 
     <!-- Botões de Buscar e Limpar Lado a Lado -->
     <div class="d-flex gap-2 mb-3 justify-content-center">
-      <button type="button" class="text-dark"
-        style="background-color: #ffffff; padding: 10px; border: 1px solid #080404; border-radius: 20px; width: 150px;"
-        (click)="aplicarFiltros()">
+      <button type="button" class="text-dark" style="background-color: #ffffff; padding: 10px; border: 1px solid #080404; border-radius: 20px; width: 150px;" (click)="aplicarFiltros()">
         <i class="bi bi-search"></i> Buscar
       </button>
 
-      <button type="button" class="text-dark"
-        style="background-color: #ffffff; padding: 10px; border: 1px solid #080404; border-radius: 20px; width: 150px;"
-        (click)="limparFiltros()">
+      <button type="button" class="text-dark" style="background-color: #ffffff; padding: 10px; border: 1px solid #080404; border-radius: 20px; width: 150px;" (click)="limparFiltros()">
         Limpar
       </button>
 
@@ -45,20 +36,19 @@
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center">
             <h5 class="card-title mb-0">{{ pruu.usuario.nome }}</h5>
-            <button class="btn btn-sm text-white" (click)="denunciar(pruu.id)" aria-label="Mais opções">
+            <!-- <button class="btn btn-sm text-white" (click)="denunciar(pruu.id, motivo)" aria-label="Mais opções">
               <i class="bi bi-three-dots"></i>
-            </button>
+            </button> -->
           </div>
           <p class="card-text text-end mb-2">
             <small class="text-light">{{ pruu.criadoEm | date:'dd/MM/yyyy' }}</small>
           </p>
-          <p class="card-text">{{ pruu.texto }}</p>
-          <img *ngIf="pruu.imagem" [src]="pruu.imagem" alt="Ops... parece que o pombo voou!"
-            class="pruu-image img-thumbnail" style="max-width: 250px; max-height: 250px; object-fit: contain;">
+          <img *ngIf="pruu.imagem" [src]="pruu.imagem" alt="Ops... parece que o pombo voou!" class="pruu-image img-thumbnail" style="object-fit: contain;">
 
           <div class="d-flex align-items-center">
             <p class="card-text mb-1 me-2">{{ pruu.quantidadeCurtidas }} likes</p>
           </div>
+
         </div>
       </div>
     </div>
