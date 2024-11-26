@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { UsuarioDTO } from '../model/usuario-dto';
 import { Usuario } from '../model/usuario';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -33,5 +34,10 @@ export class LoginService {
   // COLOCAR NO NAVBAR PRA DESLOGAR
   sair() {
     localStorage.removeItem('tokenUsuarioAutenticado');
+  }
+
+  estaAutenticado(): boolean {
+    const token = localStorage.getItem('tokenUsuarioAutenticado');
+    return !!token;
   }
 }

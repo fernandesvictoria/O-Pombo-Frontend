@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Pruu } from '../../shared/model/pruu';
 import { PruuService } from '../../shared/service/pruu.service';
-import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-pruu-cadastro',
   templateUrl: './pruu-cadastro.component.html',
 })
+<<<<<<< HEAD
 export class PruuCadastroComponent {
   public pruu: Pruu = new Pruu();
   public selectedFile: File | null = null;
@@ -66,5 +67,33 @@ export class PruuCadastroComponent {
 
   voltar(): void {
     this.router.navigate(['/']); // REVER ROTA
+=======
+export class PruuCadastroComponent implements OnInit {
+  pruu: Pruu = new Pruu();
+
+  constructor(
+    private pruuService: PruuService,
+    private router: Router
+  ) { }
+
+  ngOnInit(): void {
+  }
+
+  public cadastrar(): void {
+    this.pruuService.cadastrar(this.pruu).subscribe({
+      next: () => {
+        Swal.fire('Sucesso', 'Pruu cadastrado com sucesso!', 'success');
+        this.router.navigate(['/pruu']);
+      },
+      error: erro => {
+        Swal.fire('Erro', 'Erro ao cadastrar o Pruu. Tente novamente.', 'error');
+        console.error('Erro ao cadastrar Pruu', erro);
+      }
+    });
+  }
+
+  public cancelar(): void {
+    this.router.navigate(['/pruu']);
+>>>>>>> c0b3e78 (feat: create pruu)
   }
 }

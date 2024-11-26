@@ -10,7 +10,6 @@ const routes: Routes = [
   {
     path: 'cadastro', component: CadastroComponent
   },
-
 ];
 
 @NgModule({
