@@ -22,11 +22,12 @@ export class CadastroComponent {
   public cadastrar() {
     this.service.cadastrar(this.usuario).subscribe(
       (resposta) => {
-        Swal.fire('Usuario cadastrado com sucesso!', '', 'success');
+        Swal.fire('Usuário cadastrado com sucesso!', '', 'success');
         this.redirecionar();
       },
       (erro) => {
-        Swal.fire('Erro ao cadastrar-se!', erro, 'error');
+        const mensagemErro = erro?.error?.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde.';
+        Swal.fire('Erro ao cadastrar-se!', mensagemErro, 'error');
       }
     );
   }
