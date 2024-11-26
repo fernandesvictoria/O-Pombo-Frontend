@@ -40,23 +40,4 @@ export class LoginService {
     const token = localStorage.getItem('tokenUsuarioAutenticado');
     return !!token;
   }
-
-  getPerfilUsuario(): string | null {
-    const token = localStorage.getItem('tokenUsuarioAutenticado');
-    if (token) {
-      try {
-        const decodedToken: any = jwtDecode(token);
-        return decodedToken?.perfil || null;
-      } catch (error) {
-        console.error('Erro ao decodificar o token', error);
-        return null;
-      }
-    }
-    return null;
-  }
-
-  isAdmin(): boolean {
-    const perfil = this.getPerfilUsuario();
-    return perfil === 'ADMINISTRADOR';
-  }
 }
