@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuarioService } from '../../shared/service/usuario.service';
+import { Router } from '@angular/router';
 import { Usuario } from '../../shared/model/usuario';
 import { UsuarioSeletor } from '../../shared/seletor/usuario.seletor';
-import { Router } from 'express';
+import { UsuarioService } from '../../shared/service/usuario.service';
 
 @Component({
   selector: 'app-usuario-listagem',
   templateUrl: './usuario-listagem.component.html',
-  styleUrls: ['./usuario-listagem.component.css']
 })
 export class UsuarioListagemComponent implements OnInit {
   usuarios: Usuario[] = [];
