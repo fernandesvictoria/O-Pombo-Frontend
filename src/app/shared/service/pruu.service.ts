@@ -24,8 +24,8 @@ export class PruuService {
     return this.httpClient.delete<boolean>(`${this.API}/excluir/${idPruu}/${idUsuario}`, {})
   }
 
-  pesquisarTodos(): Observable<Array<Pruu>> {
-    return this.httpClient.get<Array<Pruu>>(`${this.API}/todos`, {})
+  pesquisarTodos(seletor: PruuSeletor): Observable<Array<Pruu>> {
+    return this.httpClient.post<Array<Pruu>>(`${this.API}/todos`, seletor);
   }
   
   pesquisarPorId(idPruu: number): Observable<Pruu> {
