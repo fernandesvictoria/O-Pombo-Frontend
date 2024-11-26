@@ -10,6 +10,15 @@ import { PruuService } from '../../shared/service/pruu.service';
   templateUrl: './pruu-listagem.component.html',
 })
 export class PruuListagemComponent implements OnInit {
+isCurtido: any;
+
+
+denunciar(arg0: any) {
+ throw new Error('Method not implemented.');
+}
+
+
+
   pruus: Pruu[] = [];
   filtroAtivo: boolean = false;
   pruuSeletor: PruuSeletor = new PruuSeletor();
@@ -17,6 +26,7 @@ export class PruuListagemComponent implements OnInit {
   readonly itensPorPagina: number = 5;
 
   usuarioAutenticado!: Usuario;
+
 
   constructor(private pruuService: PruuService, private router: Router) { }
 

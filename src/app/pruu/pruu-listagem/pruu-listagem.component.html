@@ -1,50 +1,66 @@
-<h1>Bolinha</h1>
-<!-- <div class="container mt-4">
-  <div class="row">
-    <div class="col-md-12">
-      <h3>Lista de Pruus</h3>
-      <div class="card">
+<app-menu></app-menu>
+<div style="background-color: #080404; min-height: 100vh; padding: 50px; margin-left: 25%; position: relative;">
+  <!-- Formulário de Filtro Centralizado -->
+  <form class="d-flex flex-column align-items-center mb-4">
+    <div class="d-flex gap-2 mb-3 justify-content-center">
+      <!-- Filtro por Data -->
+      <input type="date" class="form-control border-dark text-white" [(ngModel)]="pruuSeletor.criadoEmInicio"
+        name="dataCriacao" placeholder="Data" required
+        style="background-color: #202327; border-radius: 20px; width: 250px;" />
+      <input type="date" class="form-control border-dark text-white" [(ngModel)]="pruuSeletor.criadoEmFim"
+        name="dataCriacao" placeholder="Data" required
+        style="background-color: #202327; border-radius: 20px; width: 250px;" />
+
+      <!-- Filtro por Usuário -->
+      <input type="text" class="form-control border-dark text-white" [(ngModel)]="pruuSeletor.idUsuario" name="usuario"
+        placeholder="Usuário" required style="background-color: #202327; border-radius: 20px; width: 250px;" />
+    </div>
+
+    <!-- Botões de Buscar e Limpar Lado a Lado -->
+    <div class="d-flex gap-2 mb-3 justify-content-center">
+      <button type="button" class="text-dark"
+        style="background-color: #ffffff; padding: 10px; border: 1px solid #080404; border-radius: 20px; width: 150px;"
+        (click)="aplicarFiltros()">
+        <i class="bi bi-search"></i> Buscar
+      </button>
+
+      <button type="button" class="text-dark"
+        style="background-color: #ffffff; padding: 10px; border: 1px solid #080404; border-radius: 20px; width: 150px;"
+        (click)="limparFiltros()">
+        Limpar
+      </button>
+
+      <button class="btn btn-primary" [routerLink]="'/pruu/cadastrar'" style="border-radius: 20px; width: 120px;">
+        Post
+      </button>
+    </div>
+  </form>
+
+  <h2 class="text-center mb-4 text-white">Meu Feed</h2>
+
+  <!-- Cards de Pruus  -->
+  <div class="d-flex flex-column align-items-center" style="width: 100%;">
+    <div *ngFor="let pruu of pruus" class="mb-4" style="width: 100%; max-width: 600px;">
+      <div class="card shadow-sm text-light" style="background-color: #080808; border: 1px solid #413e3e;">
         <div class="card-body">
-          <h5>Filtros</h5>
-          <form (ngSubmit)="aplicarFiltros()">
-            <div class="row">
-              <div class="col-md-3">
-                <label for="criadoEmInicio" class="form-label">Período de Criação (Início)</label>
-                <input type="date" id="criadoEmInicio" [(ngModel)]="pruuSeletor.criadoEmInicio" name="criadoEmInicio" class="form-control">
-              </div>
-              <div class="col-md-3">
-                <label for="criadoEmFim" class="form-label">Período de Criação (Fim)</label>
-                <input type="date" id="criadoEmFim" [(ngModel)]="pruuSeletor.criadoEmFim" name="criadoEmFim" class="form-control">
-              </div>
-              <div class="col-md-3">
-                <label for="usuario" class="form-label">Nome do Usuário</label>
-                <input type="text" id="usuario" [(ngModel)]="pruuSeletor.idUsuario" name="idUsuario" class="form-control" placeholder="Nome do usuário">
-              </div>
-              <div class="col-md-3">
-                <label for="texto" class="form-label">Texto</label>
-                <input type="text" id="texto" [(ngModel)]="pruuSeletor.texto" name="texto" class="form-control" placeholder="Buscar por texto">
-              </div>
-            </div>
-            <div class="mt-3">
-              <button type="submit" class="btn btn-primary">Aplicar Filtros</button>
-              <button type="button" class="btn btn-secondary" (click)="limparFiltros()">Limpar Filtros</button>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div *ngIf="pruus.length > 0" class="mt-4">
-        <div *ngFor="let pruu of pruus" class="card mb-3">
-          <div class="card-body">
-            <h5 class="card-title">{{ pruu.texto }}</h5>
-            <p class="card-text">{{ pruu.texto }}</p>
-            <p class="card-text"><small class="text-muted">Criado por: {{ pruu.usuario.nome }} em {{ pruu.criadoEm | date }}</small></p>
-            <button class="btn btn-outline-primary" (click)="curtir(pruu)">
-              {{ pruu.usuariosQueCurtiram.some(usuario => usuario.id === usuarioLogado.id) ? 'Descurtir' : 'Curtir' }}
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0">{{ pruu.usuario.nome }}</h5>
+            <button class="btn btn-sm text-white" (click)="denunciar(pruu.id)" aria-label="Mais opções">
+              <i class="bi bi-three-dots"></i>
             </button>
-            <p class="mt-2">Curtidas: {{ pruu.quantidadeCurtidas }}</p>
+          </div>
+          <p class="card-text text-end mb-2">
+            <small class="text-light">{{ pruu.criadoEm | date:'dd/MM/yyyy' }}</small>
+          </p>
+          <p class="card-text">{{ pruu.texto }}</p>
+          <img *ngIf="pruu.imagem" [src]="pruu.imagem" alt="Ops... parece que o pombo voou!"
+            class="pruu-image img-thumbnail" style="max-width: 250px; max-height: 250px; object-fit: contain;">
+
+          <div class="d-flex align-items-center">
+            <p class="card-text mb-1 me-2">{{ pruu.quantidadeCurtidas }} likes</p>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div> -->
+</div>
