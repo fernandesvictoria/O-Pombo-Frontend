@@ -34,4 +34,9 @@ export class LoginService {
   sair() {
     localStorage.removeItem('tokenUsuarioAutenticado');
   }
+
+  estaAutenticado(): boolean {
+    const token = localStorage.getItem('tokenUsuarioAutenticado');
+    return !!token;
+  }
 }
