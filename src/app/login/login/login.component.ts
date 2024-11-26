@@ -19,20 +19,16 @@ export class LoginComponent {
     private router: Router,
   ) { }
 
-  // Método para fazer o login
   public logar() {
     this.service.autenticar(this.dto).subscribe({
       next: jwt => {
-        // Salva o token no localStorage
         Swal.fire('Sucesso', 'Usuário autenticado com sucesso', 'success');
-        const token: string = jwt.body + ''; // Extrai o token
+        const token: string = jwt.body + '';
         localStorage.setItem('tokenUsuarioAutenticado', token);
 
-        // Redireciona para a próxima página após sucesso
         this.router.navigate(['pruu']);
       },
       error: erro => {
-        // Trata o erro de autenticação
         let mensagem: string;
         if (erro.status === 401) {
           mensagem = 'Usuário ou senha inválidos';
