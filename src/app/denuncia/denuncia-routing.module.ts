@@ -4,8 +4,12 @@ import { DenunciaDetalheComponent } from './denuncia-detalhe/denuncia-detalhe.co
 import { DenunciaListagemComponent } from './denuncia-listagem/denuncia-listagem.component';
 
 const routes: Routes = [
-  { path: 'denuncias/:id', component: DenunciaDetalheComponent },
-  { path: 'denuncias', component: DenunciaListagemComponent }
+  {
+    path: '', component: DenunciaListagemComponent
+  },
+  {
+    path: 'cadastro', component: DenunciaDetalheComponent
+  },
 ];
 
 @NgModule({
