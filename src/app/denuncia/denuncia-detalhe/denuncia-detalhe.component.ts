@@ -3,12 +3,14 @@ import { Denuncia } from "../../shared/model/denuncia";
 import { Pruu } from "../../shared/model/pruu";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DenunciaService } from "../../shared/service/denuncia.service";
+import { DenunciaSeletor } from "../../shared/seletor/denuncia.seletor";
 
 @Component({
   selector: 'app-denuncia-detalhe',
   templateUrl: './denuncia-detalhe.component.html',
 })
 export class DenunciaDetalheComponent implements OnInit {
+  denunciaSeletor: DenunciaSeletor = new DenunciaSeletor();
   denuncia!: Denuncia;
   idDenuncia!: number;
   pruu!: Pruu;
@@ -36,6 +38,23 @@ export class DenunciaDetalheComponent implements OnInit {
       },
     });
   }
+
+  // pesquisarTodos(): void {
+  //   this.denunciaService.pesquisarComFiltro(this.denunciaSeletor).subscribe({
+  //     next: denuncias => this.denuncia = denuncias,
+  //     error: erro => console.error('Erro ao buscar denúncias', erro)
+  //   });
+  // }
+
+  // atualizarDenuncia(idDenuncia: string, novoStatus: string): void {
+  //   this.denunciaService.atualizar(idDenuncia, novoStatus as any).subscribe({
+  //     next: denunciaAtualizada => {
+  //       console.log('Denúncia atualizada:', denunciaAtualizada);
+  //       this.pesquisarTodos();
+  //     },
+  //     error: erro => console.error('Erro ao atualizar denúncia', erro)
+  //   });
+  // }
 
   voltarParaListagem(): void {
     this.router.navigate(['/denuncia']);

@@ -18,8 +18,6 @@ export class DenunciaListagemComponent implements OnInit {
   constructor(private denunciaService: DenunciaService, private router: Router) { }
 
   ngOnInit(): void {
-    this.denunciaSeletor.limite = this.itensPorPagina;
-    this.denunciaSeletor.pagina = 1;
 
     this.pesquisarTodos();
   }
@@ -56,16 +54,6 @@ export class DenunciaListagemComponent implements OnInit {
         }
       },
       error: erro => console.error('Erro ao excluir denúncia', erro)
-    });
-  }
-
-  atualizarDenuncia(idDenuncia: string, novoStatus: string): void {
-    this.denunciaService.atualizar(idDenuncia, novoStatus as any).subscribe({
-      next: denunciaAtualizada => {
-        console.log('Denúncia atualizada:', denunciaAtualizada);
-        this.pesquisarTodos();
-      },
-      error: erro => console.error('Erro ao atualizar denúncia', erro)
     });
   }
 
