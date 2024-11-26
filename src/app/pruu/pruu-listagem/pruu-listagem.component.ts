@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Pruu } from '../../shared/model/pruu';
-import { PruuSeletor } from '../../shared/seletor/pruu.seletor';
 import { Usuario } from '../../shared/model/usuario';
+import { PruuSeletor } from '../../shared/seletor/pruu.seletor';
 import { PruuService } from '../../shared/service/pruu.service';
 
 @Component({
   selector: 'app-pruu-listagem',
   templateUrl: './pruu-listagem.component.html',
-  styleUrls: ['./pruu-listagem.component.scss']
 })
 export class PruuListagemComponent implements OnInit {
   pruus: Pruu[] = [];
@@ -16,11 +15,11 @@ export class PruuListagemComponent implements OnInit {
   pruuSeletor: PruuSeletor = new PruuSeletor();
   totalPaginas: number = 0;
   readonly itensPorPagina: number = 5;
-  
+
   usuarioAutenticado!: Usuario;
-  
+
   constructor(private pruuService: PruuService, private router: Router) { }
-  
+
   ngOnInit(): void {
     this.pruuSeletor.limite = this.itensPorPagina;
     this.pruuSeletor.pagina = 1;

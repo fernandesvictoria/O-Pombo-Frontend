@@ -7,7 +7,6 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-pruu-cadastro',
   templateUrl: './pruu-cadastro.component.html',
-  styleUrl: './pruu-cadastro.component.scss'
 })
 export class PruuCadastroComponent {
   // public pruu: Pruu = new Pruu();

@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
-import { Usuario } from '../../shared/model/usuario';
-import { LoginService } from '../../shared/service/login.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { Perfil } from '../../shared/model/enum/perfil'; // Importe a enumeração de perfis
+import { Usuario } from '../../shared/model/usuario';
+import { LoginService } from '../../shared/service/login.service';
 
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.component.html',
-  styleUrls: ['./cadastro.component.scss']
+
 })
 export class CadastroComponent {
   public usuario: Usuario = new Usuario();
