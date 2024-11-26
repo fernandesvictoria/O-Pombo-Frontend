@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+<<<<<<< HEAD
 import { jwtDecode } from 'jwt-decode';
 import { Usuario } from '../../shared/model/usuario';
+=======
+import { LoginService } from '../../shared/service/login.service';
+import { AuthService } from '../../shared/service/auth.service';
+>>>>>>> caad81b (refactor: layout menu)
 
 @Component({
   selector: 'app-menu',
@@ -9,8 +14,16 @@ import { Usuario } from '../../shared/model/usuario';
 })
 export class MenuComponent implements OnInit {
 
+<<<<<<< HEAD
   public UsuarioAutenticado: Usuario | undefined;
   public isAdmin: boolean = false;
+=======
+  constructor(
+    private service: LoginService,
+    private authService: AuthService,
+    private router: Router,
+  ) { }
+>>>>>>> caad81b (refactor: layout menu)
 
   constructor(private router: Router) { }
 
@@ -36,7 +49,7 @@ export class MenuComponent implements OnInit {
   }
 
   public isAdmin(): boolean {
-    this.usuarioAdmin = this.service.isAdmin();
+    this.usuarioAdmin = this.authService.isAdmin();
     return this.usuarioAdmin;
   }
 }
