@@ -1,31 +1,40 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { Injectable, inject } from '@angular/core';
+import {
+  CanActivate,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  Router,
+  CanActivateFn,
+} from '@angular/router';
 import { AuthService } from '../shared/service/auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
+  constructor(private authService: AuthService, private router: Router) { }
 
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) { }
-
-  canActivate(): boolean {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean {
     if (this.authService.isAdmin()) {
       return true;
-    }
-
-    const token = localStorage.getItem('tokenUsuarioAutenticado');
-    if (token) {
-      // se o usuário estiver autenticado mas não for ADMIN, redireciona para outra rota
-      this.router.navigate(['/pruu']);
     } else {
-      // se não estiver autenticado, redireciona para a página de login
-      this.router.navigate(['/login']);
+      this.router.navigate(['/pruu']);
+      return false;
     }
-
-    return false; // impede o acesso à rota
   }
 }
+
+export const canActivateGuard: CanActivateFn = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+) => {
+  if ((inject(AuthService) as AuthService).isAdmin()) {
+    return true;
+  } else {
+    inject(Router).navigate(['/pruu']); 
+    return false;
+  }
+};

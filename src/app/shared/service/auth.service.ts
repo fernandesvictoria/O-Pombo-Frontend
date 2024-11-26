@@ -8,20 +8,15 @@ export class AuthService {
   private ehAdministrador: boolean = false;
 
   constructor() {
-    this.updateUserRole();
-  }
-
-  updateUserRole(): void {
-    const token = localStorage.getItem('tokenUsuarioAutenticado');
-    if (token) {
-      const tokenJSON: any = jwtDecode(token);
-      this.ehAdministrador = tokenJSON?.roles === 'ADMIN';
-    } else {
-      this.ehAdministrador = false;
-    }
+    this.isAdmin();
   }
 
   isAdmin(): boolean {
-    return this.ehAdministrador;
+    const token = localStorage.getItem('tokenUsuarioAutenticado');
+    if (token) {
+      const tokenJSON: any = jwtDecode(token);
+      return this.ehAdministrador = tokenJSON?.roles === 'ADMINISTRADOR';
+    }
+    return this.ehAdministrador = false;
   }
 }
