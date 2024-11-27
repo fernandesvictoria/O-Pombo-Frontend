@@ -1,1 +1,44 @@
-<p>usuario-detalhe works!</p>
+<div class="container-fluid g-5" style="background-color: #282c34; min-height: 100vh;">
+  <div class="row text-center p-2 align-items-center justify-content-center">
+    <div class="col col-md-4 pt-5">
+      <div class="card border-dark rounded-3" style="border-radius: 20px; overflow: hidden; width: 500px;">
+        <div class="card-header bg-black">
+          <h3 class="text-white pt-3">Editar Usuário</h3>
+        </div>
+        <div class="card-body bg-black d-flex flex-column align-items-center">
+          <form (ngSubmit)="editar()" style="width: 100%; max-width: 400px;">
+            <div class="mb-3">
+              <input [(ngModel)]="usuario.nome" type="text" class="form-control border-dark" name="nome" placeholder="Nome" style="width: 100%; border-radius: 20px; text-align: center; padding: 10px;" required />
+              <div class="invalid-feedback">Informe seu nome</div>
+            </div>
+            <div class="mb-3">
+              <input [(ngModel)]="usuario.email" type="email" class="form-control border-dark" name="email" placeholder="E-mail" style="width: 100%; border-radius: 20px; text-align: center; padding: 10px;" required />
+              <div class="invalid-feedback">Informe o email</div>
+            </div>
+            <div class="mb-3">
+              <input [(ngModel)]="usuario.cpf" type="text" class="form-control border-dark" name="cpf" placeholder="CPF" style="width: 100%; border-radius: 20px; text-align: center; padding: 10px;" required />
+              <div class="invalid-feedback">CPF é obrigatório</div>
+            </div>
+            <div class="mb-3">
+              <input [(ngModel)]="usuario.senha" type="password" class="form-control border-dark" name="senha" placeholder="Senha" style="width: 100%; border-radius: 20px; text-align: center; padding: 10px;" />
+              <div class="invalid-feedback">Escolha uma senha</div>
+            </div>
+            <div class="mb-3">
+              <input [(ngModel)]="usuario.fotoDePerfil" type="text" class="form-control border-dark" name="fotoDePerfil" placeholder="Foto de Perfil (URL)" style="width: 100%; border-radius: 20px; text-align: center; padding: 10px;" />
+            </div>
+            <div class="mb-3">
+              <img [src]="usuario.fotoDePerfil || 'assets/images/profile.jpg'" alt="Foto de Perfil" class="img-thumbnail" style="max-width: 150px; border-radius: 50%; object-fit: cover;">
+            </div>
+            <div class="text-center">
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary" style="background-color: #1d99ed; padding: 10px 20px; border: 1px solid #000; border-radius: 30px; cursor: pointer; width: 60%;">
+                  Salvar Alterações
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

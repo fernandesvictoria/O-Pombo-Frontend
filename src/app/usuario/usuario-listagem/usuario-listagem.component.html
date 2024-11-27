@@ -1,1 +1,56 @@
-<p>usuario-listagem works!</p>
+<div class="container-fluid g-5" style="background-color: #282c34; min-height: 100vh;">
+  <div class="row text-center p-2 align-items-center justify-content-center">
+    <div class="col col-md-10 pt-5">
+      <div class="card border-dark rounded-3" style="border-radius: 20px; overflow: hidden;">
+        <div class="card-header bg-black">
+          <h3 class="text-white pt-3">Listagem de Usuários</h3>
+        </div>
+        <div class="card-body bg-black">
+          <form class="mb-4 d-flex justify-content-center" (ngSubmit)="aplicarFiltros()">
+            <input [(ngModel)]="usuarioSeletor.nome" name="nomeFiltro" type="text" class="form-control border-dark mx-2" placeholder="Filtrar por Nome" style="width: 200px; border-radius: 20px; text-align: center; padding: 10px;" />
+            <input [(ngModel)]="usuarioSeletor.email" name="emailFiltro" type="email" class="form-control border-dark mx-2" placeholder="Filtrar por E-mail" style="width: 200px; border-radius: 20px; text-align: center; padding: 10px;" />
+            <button type="submit" class="btn btn-primary mx-2" style="background-color: #1d99ed; padding: 10px 20px; border-radius: 30px;">
+              Aplicar Filtros
+            </button>
+            <button type="button" class="btn btn-secondary mx-2" style="padding: 10px 20px; border-radius: 30px;" (click)="limparFiltros()">
+              Limpar
+            </button>
+          </form>
+          <div *ngIf="mensagemErro" class="alert alert-danger text-center">
+            {{ mensagemErro }}
+          </div>
+          <div *ngIf="!carregando">
+            <table class="table table-dark table-bordered table-hover">
+              <thead>
+                <tr class="text-center">
+                  <th>Nome</th>
+                  <th>E-mail</th>
+                  <th>CPF</th>
+                  <th>Foto de Perfil</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let usuario of usuarios" class="text-center">
+                  <td>{{ usuario.nome }}</td>
+                  <td>{{ usuario.email }}</td>
+                  <td>{{ usuario.cpf }}</td>
+                  <td>
+                    <img [src]="usuario.fotoDePerfil || 'assets/images/profile.jpg'" alt="Foto de Perfil" class="img-thumbnail" style="max-width: 50px; border-radius: 50%; object-fit: cover;">
+                  </td>
+                  <td>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div *ngIf="carregando" class="text-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Carregando...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
