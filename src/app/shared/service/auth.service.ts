@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
+import { Usuario } from '../model/usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -19,4 +20,5 @@ export class AuthService {
     }
     return this.ehAdministrador = false;
   }
+
 }

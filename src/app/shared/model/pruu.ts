@@ -11,5 +11,6 @@ export class Pruu {
   quantidadeCurtidas!: number;
   quantidadeDenuncias!: number;
   bloqueado!: boolean;
-  criadoEm!: string;
+  criadoEm!: Date;
+  curtido!: boolean;
 }

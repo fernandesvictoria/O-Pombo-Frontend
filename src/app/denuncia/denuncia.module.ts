@@ -9,7 +9,7 @@ import { MenuModule } from '../menu/menu.module';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [DenunciaDetalheComponent, DenunciaListagemComponent],
+  declarations: [DenunciaDetalheComponent],
   imports: [CommonModule, DenunciaRoutingModule, HttpClientModule, MenuModule, FormsModule],
 })
 export class DenunciaModule {}

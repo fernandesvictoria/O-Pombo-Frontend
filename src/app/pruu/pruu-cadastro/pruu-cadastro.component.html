@@ -4,7 +4,7 @@
   <div class="card mb-4 shadow-sm"
     style="background-color: #080404; color: white; border: 1px solid #888888; max-width: 600px; margin: 0 auto;">
     <div class="card-body">
-      <form #ngForm="ngForm">
+      <form #ngForm="ngForm" (ngSubmit)="cadastrar()">
         <div class="mb-3">
           <textarea id="textoPruu" class="form-control" [(ngModel)]="pruu.texto" placeholder="O que está acontecendo?"
             name="texto" rows="4" required
@@ -22,7 +22,7 @@
         </div>
 
         <div class="text-center">
-          <button type="submit" class="btn btn-outline-success col-md-3" (click)="cadastrar()"
+          <button type="submit" class="btn btn-outline-success col-md-3"
             style="background-color: #1d99ed; border-radius: 20px;">
             Pruuzar
           </button>

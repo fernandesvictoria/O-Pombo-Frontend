@@ -7,7 +7,6 @@ import { PruuService } from '../../shared/service/pruu.service';
 import { Denuncia } from '../../shared/model/denuncia';
 import { DenunciaService } from '../../shared/service/denuncia.service';
 import { Motivo } from '../../shared/model/enum/motivo';
-import { StatusDenuncia } from '../../shared/model/enum/status-denuncia';
 import { UsuarioService } from '../../shared/service/usuario.service';
 import Swal from 'sweetalert2';
 
@@ -23,8 +22,14 @@ export class PruuListagemComponent implements OnInit {
   totalPaginas: number = 0;
   mensagemErro: string = '';
   readonly itensPorPagina: number = 5;
-
   usuarioAutenticado!: Usuario;
+  pruuCurtido: Pruu[] = [];
+
+  public denuncia!: Denuncia;
+  // Define o tipo corretamente para a lista de motivos
+  public motivosDenuncia: Array<Motivo> = [];
+  public selectedMotivo: Motivo | null = null;
+
 
   constructor(
     private pruuService: PruuService,
@@ -39,9 +44,15 @@ export class PruuListagemComponent implements OnInit {
 
     this.pesquisarTodos();
     this.buscarUsuarios();
+    this.carregarMotivos();
   }
 
-
+  private carregarMotivos(): void {
+    // Filtra para pegar apenas os valores que pertencem ao enum Motivo
+    this.motivosDenuncia = Object.values(Motivo)
+      .filter((value) => Object.values(Motivo).includes(value))
+      .map((value) => value as Motivo);  // Converte para o tipo Motivo
+  }
 
   private buscarUsuarios() {
     this.usuarioService.pesquisarTodos().subscribe(
@@ -94,39 +105,116 @@ export class PruuListagemComponent implements OnInit {
   }
 
   curtir(pruu: Pruu): void {
-    const usuarioJaCurtiu = pruu.usuariosQueCurtiram.some(
-      (usuario) => usuario.id === this.usuarioAutenticado.id
-    );
-
-    if (usuarioJaCurtiu) {
-      pruu.usuariosQueCurtiram = pruu.usuariosQueCurtiram.filter(
-        (usuario) => usuario.id !== this.usuarioAutenticado.id
-      );
-      pruu.quantidadeCurtidas--;
-    } else {
-      pruu.usuariosQueCurtiram.push(this.usuarioAutenticado);
-      pruu.quantidadeCurtidas++;
-    }
-
-    this.pruuService.curtir(pruu.id, this.usuarioAutenticado.id).subscribe({
-      next: () =>
-        console.log('Ação de curtir/descurtir realizada com sucesso!'),
+    this.pruuService.curtir(pruu.id).subscribe({
+      next: (response) => {
+        // Usando subscribe para obter o Pruu após a consulta
+        this.pruuService.pesquisarPorId(pruu.id).subscribe({
+          next: (pruuCurtido) => {
+            // Agora você pode acessar a propriedade 'quantidadeCurtidas' de 'pruuCurtido'
+            pruu.quantidadeCurtidas = pruuCurtido.quantidadeCurtidas;
+            pruu.usuariosQueCurtiram = response.usuariosQueCurtiram;
+            console.log('Ação de curtir/descurtir realizada com sucesso!');
+          },
+          error: (erro) => console.error('Erro ao buscar o Pruu', erro),
+        });
+      },
       error: (erro) => console.error('Erro ao curtir/descurtir', erro),
     });
   }
 
-  denunciar(pruu: Pruu, motivo: Motivo): void {
-    const novaDenuncia: Denuncia = {
-      id: 0,
-      pruu: pruu,
-      usuario: this.usuarioAutenticado,
-      motivo: motivo,
-      status: StatusDenuncia.PENDENTE,
-    };
+  // denunciar(pruu: Pruu, motivo: Motivo): void {
+  //   const novaDenuncia: Denuncia = {
+  //     id: 0,
+  //     pruu: pruu,
+  //     usuario: this.usuarioAutenticado,
+  //     motivo: motivo,
+  //     status: StatusDenuncia.PENDENTE,
+  //   };
 
-    this.denunciaService.cadastrar(novaDenuncia).subscribe({
-      next: () => console.log('Denúncia criada com sucesso!'),
-      error: (erro) => console.error('Erro ao criar denúncia', erro),
+  //   this.denunciaService.cadastrar(novaDenuncia).subscribe({
+  //     next: () => console.log('Denúncia criada com sucesso!'),
+  //     error: (erro) => console.error('Erro ao criar denúncia', erro),
+  //   });
+  // }
+
+  // public denunciarPruu(pruu: Pruu): void {
+  //   Swal.fire({
+  //     title: 'Denunciar Pruu',
+  //     input: 'select',
+  //     inputOptions: {
+  //       [Motivo.SPAM]: 'Spam',
+  //       [Motivo.DISCURSO_ODIO]: 'Discuso de ódio',
+  //       [Motivo.CONTEUDO_INAPROPRIADO]: 'Inapropriado',
+  //     },
+  //     inputLabel: 'Selecione o motivo da denúncia',
+  //     inputPlaceholder: 'Escolha um motivo',
+  //     showCancelButton: true,
+  //     confirmButtonText: 'Enviar',
+  //     cancelButtonText: 'Cancelar',
+  //     inputValidator: (value) => {
+  //       if (!value) {
+  //         return 'Você precisa selecionar um motivo para denunciar!';
+  //       }
+  //       return null;
+  //     },
+  //   }).then((resultado) => {
+  //     if (resultado.isConfirmed) {
+  //       this.denuncia = {
+  //         motivo: resultado.value,
+  //         pruu: {
+  //           id: pruu.id,
+  //           texto: pruu.texto,
+  //           imagem: pruu.imagem || '',
+  //           quantidadeCurtidas: pruu.quantidadeCurtidas,
+  //           criadoEm: new Date(pruu.criadoEm),
+  //           quantidadeDenuncias: pruu.quantidadeDenuncias,
+  //           usuario: new Usuario,
+  //           usuariosQueCurtiram: [],
+  //           denuncias: [],
+  //           bloqueado: false
+  //         } ,
+
+  //       };
+
+  //       this.denunciaService.criarDenuncia(this.denuncia).subscribe({
+  //         next: (response) => {
+  //           Swal.fire('Enviado!', 'Sua denúncia foi registrada.', 'success');
+  //         },
+  //         error: (erro) => {
+  //           console.error('Erro ao denunciar:', erro);
+  //           Swal.fire(
+  //             'Erro!',
+  //             'Ocorreu um problema ao registrar sua denúncia.',
+  //             'error'
+  //           );
+  //         },
+  //       });
+  //     }
+  //   });
+  // }
+
+  public excluir(pruu: Pruu): void {
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: 'Esta ação não pode ser desfeita!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, excluir!',
+      cancelButtonText: 'Cancelar',
+    }).then((resultado) => {
+      if (resultado.isConfirmed) {
+        this.pruuService.excluir(pruu.id, pruu.usuario.id).subscribe({
+          next: () => {
+            // Remove o Pruu da lista localmente
+            this.pruus = this.pruus.filter((p) => p.id !== pruu.id);
+            Swal.fire('Excluído!', 'O Pruu foi excluído com sucesso.', 'success');
+          },
+          error: (erro) => {
+            console.error('Erro ao excluir o Pruu:', erro);
+            Swal.fire('Erro!', 'Não foi possível excluir o Pruu.', 'error');
+          },
+        });
+      }
     });
   }
 

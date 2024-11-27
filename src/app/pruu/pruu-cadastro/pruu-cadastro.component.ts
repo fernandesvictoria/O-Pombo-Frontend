@@ -20,6 +20,8 @@ export class PruuCadastroComponent implements OnInit {
   }
 
   public cadastrar(): void {
+    console.log(this.pruu);
+
     this.pruuService.cadastrar(this.pruu).subscribe({
       next: () => {
         Swal.fire('Sucesso', 'Pruu cadastrado com sucesso!', 'success');

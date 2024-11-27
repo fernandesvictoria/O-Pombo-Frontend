@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Denuncia } from '../../shared/model/denuncia';
 import { DenunciaSeletor } from '../../shared/seletor/denuncia.seletor';
 import { DenunciaService } from '../../shared/service/denuncia.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-denuncia-listagem',
   templateUrl: './denuncia-listagem.component.html',
+  standalone: true,
+  imports: [FormsModule, RouterModule, CommonModule],
 })
 export class DenunciaListagemComponent implements OnInit {
   denuncias: Denuncia[] = [];

@@ -1,10 +1,10 @@
-<!--  <app-menu></app-menu>
-<div style="background-color: #080404; min-height: 100vh; padding: 50px; margin-left: 25%; color: white;">
+ <app-menu></app-menu>
+<!-- <div style="background-color: #080404; min-height: 100vh; padding: 50px; margin-left: 25%; color: white;">
   Formulário de Denúncia
   <h2 class="text-center mb-4">Denunciar Postagem</h2>
   <div class="pruu-info card p-4 mb-4" style="background-color: #202327; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <h3 class="mb-3">Informações da Postagem</h3>
-    <p><strong>Data de Criação:</strong> {{ pruu.dataCriacao | date }}</p>
+    <p><strong>Data de Criação:</strong> {{ pruu.criadoEm | date }}</p>
     <p><strong>Título:</strong> {{ pruu.usuario.nome }}</p>
     <p><strong>Descrição:</strong> {{ pruu.texto }}</p>
   </div>
@@ -26,3 +26,38 @@
     </form>
   </div>
 </div> -->
+
+
+<div class="container">
+  <h1>Detalhes da Denúncia</h1>
+
+  <div *ngIf="denuncia">
+    <div class="form-group">
+      <label for="descricao">Descrição:</label>
+      <textarea id="descricao" [(ngModel)]="denuncia.motivo" rows="4" class="form-control" disabled></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="status">Status:</label>
+      <select id="status" [(ngModel)]="denuncia.status" class="form-control">
+        <option value="PENDENTE">Pendente</option>
+        <option value="ACEITA">Aceita</option>
+        <option value="RECUSADA">Recusada</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="pruu">PRUU Relacionado:</label>
+      <input id="pruu" [(ngModel)]="pruu.usuario.nome" class="form-control" disabled />
+    </div>
+
+    <div class="buttons">
+      <!-- <button (click)="atualizarDenuncia()" class="btn btn-primary">Salvar Alterações</button> -->
+      <button (click)="voltarParaListagem()" class="btn btn-secondary">Voltar</button>
+    </div>
+  </div>
+
+  <div *ngIf="!denuncia">
+    <p>Carregando a denúncia...</p>
+  </div>
+</div>

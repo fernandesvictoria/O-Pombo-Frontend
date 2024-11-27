@@ -16,8 +16,8 @@ export class PruuService {
     return this.httpClient.post<Pruu>(`${this.API}/cadastrar`, novoPruu)
   }
 
-  curtir(idPruu: string, idUsuario: string): Observable<Pruu> {
-    return this.httpClient.post<Pruu>(`${this.API}/curtir/${idPruu}/${idUsuario}`, {})
+  curtir(idPruu: string): Observable<Pruu> {
+    return this.httpClient.post<Pruu>(`${this.API}/curtir/${idPruu}`, {})
   }
 
   excluir(idPruu: string, idUsuario: string): Observable<boolean> {
@@ -27,8 +27,8 @@ export class PruuService {
   pesquisarTodos(seletor: PruuSeletor): Observable<Array<Pruu>> {
     return this.httpClient.post<Array<Pruu>>(`${this.API}/todos`, seletor);
   }
-  
-  pesquisarPorId(idPruu: number): Observable<Pruu> {
+
+  pesquisarPorId(idPruu: string): Observable<Pruu> {
     return this.httpClient.get<Pruu>( `${this.API}/${idPruu}`, {});
   }
 

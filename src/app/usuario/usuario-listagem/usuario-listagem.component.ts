@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Usuario } from '../../shared/model/usuario';
 import { UsuarioSeletor } from '../../shared/seletor/usuario.seletor';
 import { UsuarioService } from '../../shared/service/usuario.service';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-usuario-listagem',
   templateUrl: './usuario-listagem.component.html',
+  standalone: true,
+  imports: [FormsModule, RouterModule, CommonModule],
 })
 export class UsuarioListagemComponent implements OnInit {
   usuarios: Usuario[] = [];
