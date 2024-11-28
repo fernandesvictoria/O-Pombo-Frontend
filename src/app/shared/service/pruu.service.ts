@@ -39,4 +39,8 @@ export class PruuService {
   pesquisarComFiltro(seletor: PruuSeletor): Observable<Array<Pruu>> {
     return this.httpClient.post<Array<Pruu>>(`${this.API}/filtrar`, seletor);
   }
+
+  pesquisarUsuariosQueCurtiram(idPruu: string): Observable<Array<string>> {
+    return this.httpClient.get<Array<string>>(`${this.API}/usuarios-que-curtiram/${idPruu}`);
+  }
 }
