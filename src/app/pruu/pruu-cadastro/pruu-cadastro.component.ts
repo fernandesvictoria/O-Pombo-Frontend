@@ -20,8 +20,7 @@ export class PruuCadastroComponent implements OnInit {
   }
 
   public cadastrar(): void {
-    console.log(this.pruu);
-
+    console.log(this.pruu); // Verifique no console se os dados estão corretos
     this.pruuService.cadastrar(this.pruu).subscribe({
       next: () => {
         Swal.fire('Sucesso', 'Pruu cadastrado com sucesso!', 'success');
@@ -30,7 +29,7 @@ export class PruuCadastroComponent implements OnInit {
       error: erro => {
         Swal.fire('Erro', 'Erro ao cadastrar o Pruu. Tente novamente.', 'error');
         console.error('Erro ao cadastrar Pruu', erro);
-      }
+      },
     });
   }
 

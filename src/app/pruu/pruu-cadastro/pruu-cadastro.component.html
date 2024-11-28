@@ -4,18 +4,15 @@
   <div class="card mb-4 shadow-sm"
     style="background-color: #080404; color: white; border: 1px solid #888888; max-width: 600px; margin: 0 auto;">
     <div class="card-body">
-      <form #ngForm="ngForm" (ngSubmit)="cadastrar()">
+      <form #ngForm="ngForm" name="pruuForm" (ngSubmit)="cadastrar()">
         <div class="mb-3">
-          <textarea id="textoPruu" class="form-control" [(ngModel)]="pruu.texto" placeholder="O que está acontecendo?"
-            name="texto" rows="4" required
-            style="background-color: #080404; color: white; border: none; border-bottom: 1px solid #888888; border-radius: 0; font-size: 1.2rem;">
-          </textarea>
+          <textarea id="textoPruu" class="form-control" [(ngModel)]="pruu.texto" name="texto"
+            placeholder="O que está acontecendo?" rows="4" required
+            style="background-color: #080404; color: white; border: none; border-bottom: 1px solid #888888; border-radius: 0; font-size: 1.2rem;"></textarea>
         </div>
 
         <div class="mb-3">
-          <!-- <button class="btn text-white" (click)="onFileSelected($event)" aria-label="Upload de imagem"></button> -->
           <label for="fotoPruu" class="form-label">
-
             <i class="bi bi-camera" style="font-size: 30px; cursor: pointer; color: #1d99ed;"></i>
           </label>
           <input type="file" id="fotoPruu" class="form-control" accept="image/*" style="display: none;" />
@@ -28,6 +25,7 @@
           </button>
         </div>
       </form>
+
     </div>
   </div>
 </div>
