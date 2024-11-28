@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Pruu } from '../model/pruu';
 import { Observable } from 'rxjs';
 import { PruuSeletor } from '../seletor/pruu.seletor';
+import { Usuario } from '../model/usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +41,7 @@ export class PruuService {
     return this.httpClient.post<Array<Pruu>>(`${this.API}/filtrar`, seletor);
   }
 
-  pesquisarUsuariosQueCurtiram(idPruu: string): Observable<Array<string>> {
-    return this.httpClient.get<Array<string>>(`${this.API}/usuarios-que-curtiram/${idPruu}`);
+  pesquisarUsuariosQueCurtiram(idPruu: string): Observable<Array<Usuario>> {
+    return this.httpClient.get<Array<Usuario>>(`${this.API}/usuarios-que-curtiram/${idPruu}`);
   }
 }

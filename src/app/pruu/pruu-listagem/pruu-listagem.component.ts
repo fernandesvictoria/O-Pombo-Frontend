@@ -193,6 +193,16 @@ export class PruuListagemComponent implements OnInit {
   //   });
   // }
 
+  usuariosQueCurtiram(pruu: Pruu): void {
+    this.pruuService.pesquisarUsuariosQueCurtiram(pruu.id).subscribe({
+      next: (usuarios) => {
+        const nomes = usuarios.map((u) => u.nome).join(', ');
+        Swal.fire('Usuários que curtiram', nomes, 'info');
+      },
+      error: (erro) => console.error('Erro ao buscar usuários que curtiram', erro),
+    });
+  }
+
   public excluir(pruu: Pruu): void {
     Swal.fire({
       title: 'Tem certeza?',
