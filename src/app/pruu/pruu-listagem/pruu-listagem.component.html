@@ -6,13 +6,13 @@
       <!-- Filtro por Data -->
       <div class="row mb-3">
         <label for="dataInicio" class="text-white">De</label>
-        <input type="date" class="form-control text-white" [(ngModel)]="pruuSeletor.criadoEmInicio"
-          name="dataCriacao" style="background-color: #202327; border-radius: 10px; width: 200px;" />
+        <input type="date" class="form-control text-white" [(ngModel)]="pruuSeletor.criadoEmInicio" name="dataCriacao"
+          style="background-color: #202327; border-radius: 10px; width: 200px;" />
       </div>
       <div class="row mb-3">
         <label for="dataFim" class="text-white">Até</label>
-        <input type="date" class="form-control text-white" [(ngModel)]="pruuSeletor.criadoEmFim"
-          name="dataFim" style="background-color: #202327; border-radius: 10px; width: 200px;" />
+        <input type="date" class="form-control text-white" [(ngModel)]="pruuSeletor.criadoEmFim" name="dataFim"
+          style="background-color: #202327; border-radius: 10px; width: 200px;" />
       </div>
 
       <!-- Filtro por Usuário -->
@@ -46,52 +46,45 @@
     <div *ngFor="let pruu of pruus" class="mb-4" style="width: 100%; max-width: 600px;">
       <!-- Post Esqueleto -->
       <div class="d-flex gap-3 p-3" style="background-color: #202327; border-radius: 10px;">
-        <!-- Avatar -->
-        <div style="flex-shrink: 0;">
-          <div
-            style="width: 50px; height: 50px; background-color: #3a3b3c; border-radius: 50%; overflow: hidden;">
-            <img
-              *ngIf="pruu.usuario.fotoDePerfil"
-              [src]="pruu.usuario.fotoDePerfil"
-              alt="Imagem do Post"
-              class="img-fluid"
-              style="width: 100%; height: 100%; object-fit: cover;" />
-          </div>
-        </div>
+
+
 
         <!-- Conteúdo -->
         <div style="flex-grow: 1;">
           <!-- Cabeçalho -->
-          <div class="d-flex justify-content-between align-items-center">
-            <div class="text-white">
-              <strong class="d-block">{{ pruu.usuario.nome }}</strong>
+          <div class="d-flex align-items-center gap-2">
+            <!-- Imagem de Perfil -->
+            <img *ngIf="pruu.usuario.fotoDePerfil" [src]="'data:image/jpeg;base64,' + pruu.usuario.fotoDePerfil"
+              alt="Foto de {{ pruu.usuario.nome }}" class="rounded-circle"
+              style="width: 50px; height: 50px; object-fit: cover;" />
+
+            <!-- Nome do Usuário e Data -->
+            <div>
+              <strong class="text-white">{{ pruu.usuario.nome }}</strong>
+              <br />
               <span class="text-white" style="font-size: 0.85rem;">{{ pruu.criadoEm | date:'dd/MM/yyyy' }}</span>
             </div>
           </div>
+
+
 
           <!-- Texto -->
           <p class="text-white mt-2 mb-2">{{ pruu.texto }}</p>
 
           <!-- Imagem (se existir) -->
-          <img *ngIf="pruu.imagem" [src]="pruu.imagem" alt="Imagem do Post"
-            class="img-fluid rounded" style="max-height: 300px; object-fit: cover; width: 100%;" />
+          <img *ngIf="pruu.imagem" [src]="pruu.imagem" alt="Imagem do Post" class="img-fluid rounded"
+            style="max-height: 300px; object-fit: cover; width: 100%;" />
 
           <!-- Ações -->
           <div class="d-flex justify-content-between mt-3 text-muted">
             <!-- Curtir -->
-            <span
-              class="text-white d-flex align-items-center like-button"
-              [class.liked]="pruu.curtido"
+            <span class="text-white d-flex align-items-center like-button" [class.liked]="pruu.curtido"
               (click)="curtir(pruu)">
               <i class="bi" [ngClass]="pruu.curtido ? 'bi-heart-fill' : 'bi-heart'"></i>
               <span class="ms-1">{{ pruu.quantidadeCurtidas }}</span>
             </span>
 
-            <!-- Compartilhar -->
-            <span class="text-white d-flex align-items-center">
-              <i class="bi bi-share"></i>
-              <span class="ms-1">Compartilhar</span>
-            </span>
+            
           </div>
 
         </div>

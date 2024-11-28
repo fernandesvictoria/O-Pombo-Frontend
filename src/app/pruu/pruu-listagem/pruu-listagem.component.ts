@@ -70,7 +70,7 @@ export class PruuListagemComponent implements OnInit {
   }
 
   pesquisarTodos(): void {
-    this.pruuService.pesquisarTodos(this.pruuSeletor).subscribe({
+    this.pruuService.pesquisarComFiltro(this.pruuSeletor).subscribe({
       next: (pruus) => (this.pruus = pruus),
       error: (erro) => console.error('Erro ao buscar Pruus', erro),
     });
@@ -112,7 +112,7 @@ export class PruuListagemComponent implements OnInit {
           next: (pruuCurtido) => {
             // Agora você pode acessar a propriedade 'quantidadeCurtidas' de 'pruuCurtido'
             pruu.quantidadeCurtidas = pruuCurtido.quantidadeCurtidas;
-            pruu.usuariosQueCurtiram = response.usuariosQueCurtiram;
+            // pruu.usuariosQueCurtiram = response.usuariosQueCurtiram;
             console.log('Ação de curtir/descurtir realizada com sucesso!');
           },
           error: (erro) => console.error('Erro ao buscar o Pruu', erro),
