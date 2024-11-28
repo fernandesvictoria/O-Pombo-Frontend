@@ -12,10 +12,6 @@ export class UsuarioService {
 
   constructor(private httpClient: HttpClient) { }
 
-  // atualizar(UsuarioEditado: Usuario): Observable<Usuario> {
-  //   return this.httpClient.put<Usuario>(`${this.API}/atualizar`, UsuarioEditado)
-  // }
-
   atualizar(usuarioEditado: Usuario): Observable<any> {
     return this.httpClient.put(`${this.API}/atualizar`, usuarioEditado);
   }
@@ -34,13 +30,12 @@ export class UsuarioService {
     return this.httpClient.get<Usuario>(`${this.API}/${idUsuario}`)
   }
 
-  buscarUsuarioAutenticado(): Observable<Usuario> {
-    return this.httpClient.get<Usuario>(`${this.API}/usuario-autenticado`);
-  }
-  //aq
-
   pesquisarComFiltros(seletor: UsuarioSeletor): Observable<Array<Usuario>> {
     return this.httpClient.post<Array<Usuario>>(`${this.API}/filtrar`, seletor);
+  }
+
+  buscarUsuarioAutenticado(): Observable<Usuario> {
+    return this.httpClient.get<Usuario>(`${this.API}/usuario-autenticado`);
   }
 
   salvarFotoDePerfil(formData: FormData): Observable<any> {
