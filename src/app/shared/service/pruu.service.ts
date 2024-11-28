@@ -16,6 +16,10 @@ export class PruuService {
     return this.httpClient.post<Pruu>(`${this.API}/cadastrar`, novoPruu)
   }
 
+  salvarFotoPruu(formData: FormData): Observable<any> {
+    return this.httpClient.post(`${this.API}/salvar-foto`, formData);
+  }
+
   curtir(idPruu: string): Observable<Pruu> {
     return this.httpClient.post<Pruu>(`${this.API}/curtir/${idPruu}`, {})
   }
@@ -24,12 +28,12 @@ export class PruuService {
     return this.httpClient.delete<boolean>(`${this.API}/excluir/${idPruu}/${idUsuario}`, {})
   }
 
-  pesquisarTodos(seletor: PruuSeletor): Observable<Array<Pruu>> {
-    return this.httpClient.post<Array<Pruu>>(`${this.API}/todos`, seletor);
+  pesquisarTodos(): Observable<Array<Pruu>> {
+    return this.httpClient.post<Array<Pruu>>(`${this.API}/filtrar`, {});
   }
 
   pesquisarPorId(idPruu: string): Observable<Pruu> {
-    return this.httpClient.get<Pruu>( `${this.API}/${idPruu}`, {});
+    return this.httpClient.get<Pruu>(`${this.API}/${idPruu}`, {});
   }
 
   pesquisarComFiltro(seletor: PruuSeletor): Observable<Array<Pruu>> {
