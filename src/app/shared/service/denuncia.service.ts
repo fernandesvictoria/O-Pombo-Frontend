@@ -25,11 +25,15 @@ export class DenunciaService {
     return this.httpClient.delete<boolean>(`${this.API}/excluir/${idDenuncia}`)
   }
 
+  pesquisarTodas(): Observable<Array<Denuncia>> {
+    return this.httpClient.post<Array<Denuncia>>(`${this.API}/todas`, {});
+  }
+
   pesquisarPorId(idDenuncia: number): Observable<Denuncia> {
     return this.httpClient.get<Denuncia>(this.API + `/${idDenuncia}`);
   }
 
-  pesquisarComFiltro(seletor: DenunciaSeletor): Observable<Array<Denuncia>> {
+  pesquisarComFiltros(seletor: DenunciaSeletor): Observable<Array<Denuncia>> {
     return this.httpClient.post<Array<Denuncia>>(`${this.API}/filtrar`, seletor);
   }
 }

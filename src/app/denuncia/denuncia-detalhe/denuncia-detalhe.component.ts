@@ -4,6 +4,8 @@ import { Pruu } from "../../shared/model/pruu";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DenunciaService } from "../../shared/service/denuncia.service";
 import { DenunciaSeletor } from "../../shared/seletor/denuncia.seletor";
+import { StatusDenuncia } from "../../shared/model/enum/status-denuncia";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-denuncia-detalhe',
@@ -39,22 +41,15 @@ export class DenunciaDetalheComponent implements OnInit {
     });
   }
 
-  // pesquisarTodos(): void {
-  //   this.denunciaService.pesquisarComFiltro(this.denunciaSeletor).subscribe({
-  //     next: denuncias => this.denuncia = denuncias,
-  //     error: erro => console.error('Erro ao buscar denúncias', erro)
-  //   });
-  // }
-
-  // atualizarDenuncia(idDenuncia: string, novoStatus: string): void {
-  //   this.denunciaService.atualizar(idDenuncia, novoStatus as any).subscribe({
-  //     next: denunciaAtualizada => {
-  //       console.log('Denúncia atualizada:', denunciaAtualizada);
-  //       this.pesquisarTodos();
-  //     },
-  //     error: erro => console.error('Erro ao atualizar denúncia', erro)
-  //   });
-  // }
+  analisarDenuncia(idDenuncia: string, novoStatus: StatusDenuncia): void {
+    this.denunciaService.atualizar(idDenuncia, novoStatus).subscribe({
+      next: denuncia => {
+        Swal.fire('Denúncia atualizada com sucesso!', '', 'success');
+        this.voltarParaListagem();
+      },
+      error: erro => console.error('Erro ao bloquear denúncia', erro)
+    });
+  }
 
   voltarParaListagem(): void {
     this.router.navigate(['/denuncia']);

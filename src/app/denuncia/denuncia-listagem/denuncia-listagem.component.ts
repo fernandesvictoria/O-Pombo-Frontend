@@ -16,25 +16,24 @@ export class DenunciaListagemComponent implements OnInit {
   denuncias: Denuncia[] = [];
   filtroAtivo: boolean = false;
   denunciaSeletor: DenunciaSeletor = new DenunciaSeletor();
-  totalPaginas: number = 0;
-  readonly itensPorPagina: number = 5;
 
   constructor(private denunciaService: DenunciaService, private router: Router) { }
 
   ngOnInit(): void {
-
-    this.pesquisarTodos();
+    this.pesquisarTodas();
   }
 
-  pesquisarTodos(): void {
-    this.denunciaService.pesquisarComFiltro(this.denunciaSeletor).subscribe({
-      next: denuncias => this.denuncias = denuncias,
-      error: erro => console.error('Erro ao buscar denúncias', erro)
+  pesquisarTodas(): void {
+    this.denunciaService.pesquisarTodas().subscribe({
+      next: denuncias => {
+        this.denuncias = denuncias;
+      },
+      error: erro => console.error('Erro ao pesquisar denúncias', erro)
     });
   }
 
-  aplicarFiltros(): void {
-    this.denunciaService.pesquisarComFiltro(this.denunciaSeletor).subscribe({
+  pesquisarComFiltros(): void {
+    this.denunciaService.pesquisarComFiltros(this.denunciaSeletor).subscribe({
       next: denuncias => {
         this.denuncias = denuncias;
         this.filtroAtivo = true;
@@ -46,22 +45,22 @@ export class DenunciaListagemComponent implements OnInit {
   limparFiltros(): void {
     this.filtroAtivo = false;
     this.denunciaSeletor = new DenunciaSeletor();
-    this.pesquisarTodos();
+    this.pesquisarTodas();
   }
 
-  excluirDenuncia(idDenuncia: string): void {
+  excluir(idDenuncia: string): void {
     this.denunciaService.excluir(idDenuncia).subscribe({
       next: sucesso => {
         if (sucesso) {
           console.log('Denúncia excluída com sucesso!');
-          this.pesquisarTodos();
+          this.pesquisarTodas();
         }
       },
       error: erro => console.error('Erro ao excluir denúncia', erro)
     });
   }
 
-  detalharDenuncia(idDenuncia: number): void {
+  analisarDenuncia(idDenuncia: number): void {
     this.router.navigate([`/denuncia/${idDenuncia}`]);
   }
 }
