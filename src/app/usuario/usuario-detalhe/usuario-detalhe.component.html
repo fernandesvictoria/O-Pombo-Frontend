@@ -3,31 +3,51 @@
     <div class="col col-md-4 pt-5">
       <div class="card border-dark rounded-3" style="border-radius: 20px; overflow: hidden; width: 500px;">
         <div class="card-header bg-black">
+          <img src="assets/images/pigeon.png" alt="lago" class="img-fluid mx-auto d-block" style="max-width: 100px;">
           <h3 class="text-white pt-3">Editar Usuário</h3>
         </div>
         <div class="card-body bg-black d-flex flex-column align-items-center">
-          <form (ngSubmit)="editar()" style="width: 100%; max-width: 400px;">
+          <form (ngSubmit)="atualizar()" style="width: 100%; max-width: 400px;">
             <div class="mb-3">
-              <input [(ngModel)]="usuario.nome" type="text" class="form-control border-dark" name="nome" placeholder="Nome" style="width: 100%; border-radius: 20px; text-align: center; padding: 10px;" required />
+              <input [(ngModel)]="usuario.nome" type="text" class="form-control border-dark" name="nome"
+                placeholder="Nome" style="width: 100%; border-radius: 20px; text-align: center; padding: 10px;"
+                required />
               <div class="invalid-feedback">Informe seu nome</div>
             </div>
             <div class="mb-3">
-              <input [(ngModel)]="usuario.email" type="email" class="form-control border-dark" name="email" placeholder="E-mail" style="width: 100%; border-radius: 20px; text-align: center; padding: 10px;" required />
+              <input [(ngModel)]="usuario.email" type="email" class="form-control border-dark" name="email"
+                placeholder="E-mail" style="width: 100%; border-radius: 20px; text-align: center; padding: 10px;"
+                required />
               <div class="invalid-feedback">Informe o email</div>
             </div>
             <div class="mb-3">
-              <input [(ngModel)]="usuario.cpf" type="text" class="form-control border-dark" name="cpf" placeholder="CPF" style="width: 100%; border-radius: 20px; text-align: center; padding: 10px;" required />
+              <input [(ngModel)]="usuario.cpf" type="text" class="form-control border-dark" name="cpf" placeholder="CPF"
+                style="width: 100%; border-radius: 20px; text-align: center; padding: 10px;" required />
               <div class="invalid-feedback">CPF é obrigatório</div>
             </div>
             <div class="mb-3">
-              <input [(ngModel)]="usuario.fotoDePerfil" type="text" class="form-control border-dark" name="fotoDePerfil" placeholder="Foto de Perfil (URL)" style="width: 100%; border-radius: 20px; text-align: center; padding: 10px;" />
+              <input type="password" id="senha" class="form-control" [(ngModel)]="usuario.senha" name="senha"
+                placeholder="Digite sua nova senha" minlength="6"
+                style="width: 100%; border-radius: 20px; text-align: center; padding: 10px;" />
             </div>
+
             <div class="mb-3">
-              <img [src]="usuario.fotoDePerfil || 'assets/images/profile.jpg'" alt="Foto de Perfil" class="img-thumbnail" style="max-width: 150px; border-radius: 50%; object-fit: cover;">
+              <label for="fotoDePerfil" class="form-label text-white">Foto de Perfil</label>
+              <input type="file" id="fotoDePerfil" class="form-control" (change)="onFileSelected($event)" />
             </div>
+            <div *ngIf="selectedFile" class="row mb-3">
+              <div class="col-md-12 text-center">
+                <div class="preview-container">
+                  <img [src]="imagePreview" alt="Pré-visualização" class="img-fluid rounded shadow-sm"
+                    style="max-width: 200px; max-height: 300px; object-fit: contain;" />
+                </div>
+              </div>
+            </div>
+
             <div class="text-center">
               <div class="form-group">
-                <button type="submit" class="btn btn-primary" style="background-color: #1d99ed; padding: 10px 20px; border: 1px solid #000; border-radius: 30px; cursor: pointer; width: 60%;">
+                <button type="submit" (onclick)="voltar()" class="btn btn-primary"
+                  style="background-color: #1d99ed; padding: 10px 20px; border: 1px solid #000; border-radius: 30px; cursor: pointer; width: 60%;">
                   Salvar Alterações
                 </button>
               </div>
