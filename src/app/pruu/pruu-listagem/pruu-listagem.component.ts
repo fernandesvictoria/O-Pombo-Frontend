@@ -30,7 +30,6 @@ export class PruuListagemComponent implements OnInit {
   public motivosDenuncia: Array<Motivo> = [];
   public selectedMotivo: Motivo | null = null;
 
-
   constructor(
     private pruuService: PruuService,
     private denunciaService: DenunciaService,
@@ -51,7 +50,7 @@ export class PruuListagemComponent implements OnInit {
     // Filtra para pegar apenas os valores que pertencem ao enum Motivo
     this.motivosDenuncia = Object.values(Motivo)
       .filter((value) => Object.values(Motivo).includes(value))
-      .map((value) => value as Motivo);  // Converte para o tipo Motivo
+      .map((value) => value as Motivo); // Converte para o tipo Motivo
   }
 
   private buscarUsuarios() {
@@ -197,9 +196,23 @@ export class PruuListagemComponent implements OnInit {
     this.pruuService.pesquisarUsuariosQueCurtiram(pruu.id).subscribe({
       next: (usuarios) => {
         const nomes = usuarios.map((u) => u.nome).join(', ');
-        Swal.fire('Usuários que curtiram', nomes, 'info');
+        console.log(nomes);
+        if (nomes.length) {
+          Swal.fire({
+            title: 'Esse pruublicação está bombando!',
+            text: 'Esses pombos gostaram: ' + nomes,
+            icon: 'info',
+          });
+        } else {
+          Swal.fire(
+            'Parece que este pombo ainda não encontrou seu ninho...',
+            'O pruu selecionado não possui nenhuma curtida',
+            'info'
+          );
+        }
       },
-      error: (erro) => console.error('Erro ao buscar usuários que curtiram', erro),
+      error: (erro) =>
+        console.error('Erro ao buscar usuários que curtiram', erro),
     });
   }
 
@@ -217,7 +230,11 @@ export class PruuListagemComponent implements OnInit {
           next: () => {
             // Remove o Pruu da lista localmente
             this.pruus = this.pruus.filter((p) => p.id !== pruu.id);
-            Swal.fire('Excluído!', 'O Pruu foi excluído com sucesso.', 'success');
+            Swal.fire(
+              'Excluído!',
+              'O Pruu foi excluído com sucesso.',
+              'success'
+            );
           },
           error: (erro) => {
             console.error('Erro ao excluir o Pruu:', erro);
