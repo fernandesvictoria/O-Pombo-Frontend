@@ -17,6 +17,9 @@ import { jwtDecode } from 'jwt-decode';
   templateUrl: './pruu-listagem.component.html',
 })
 export class PruuListagemComponent implements OnInit {
+denunciar(_t54: Pruu) {
+throw new Error('Method not implemented.');
+}
   usuarios: Usuario[] = [];
   pruus: Pruu[] = [];
   filtroAtivo: boolean = false;
