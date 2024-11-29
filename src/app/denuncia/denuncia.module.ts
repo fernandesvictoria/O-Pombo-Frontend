@@ -2,14 +2,18 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { HttpClientModule } from '@angular/common/http';
-import { DenunciaDetalheComponent } from './denuncia-detalhe/denuncia-detalhe.component';
-import { DenunciaListagemComponent } from './denuncia-listagem/denuncia-listagem.component';
-import { DenunciaRoutingModule } from './denuncia-routing.module';
-import { MenuModule } from '../menu/menu.module';
 import { FormsModule } from '@angular/forms';
+import { MenuModule } from '../menu/menu.module';
+import { DenunciaRoutingModule } from './denuncia-routing.module';
 
 @NgModule({
-  declarations: [DenunciaDetalheComponent],
-  imports: [CommonModule, DenunciaRoutingModule, HttpClientModule, MenuModule, FormsModule],
+  declarations: [],
+  imports: [
+    CommonModule,
+    DenunciaRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    MenuModule,
+  ],
 })
 export class DenunciaModule {}

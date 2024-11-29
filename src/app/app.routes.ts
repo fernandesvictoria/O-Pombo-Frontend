@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { DenunciaDetalheComponent } from './denuncia/denuncia-detalhe/denuncia-detalhe.component';
 import { DenunciaListagemComponent } from './denuncia/denuncia-listagem/denuncia-listagem.component';
 import { AuthGuard } from './guards/auth.guard';
 import { CadastroComponent } from './login/cadastro/cadastro.component';
@@ -9,20 +10,36 @@ import { UsuarioListagemComponent } from './usuario/usuario-listagem/usuario-lis
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'cadastro',
-    pathMatch: 'full'
+    redirectTo: 'login',
+    pathMatch: 'full',
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
     path: 'cadastro',
     component: CadastroComponent,
   },
-  { path: 'pruu', loadChildren: () => import('./pruu/pruu.module').then(m => m.PruuModule) },
+  {
+    path: 'pruu',
+    loadChildren: () => import('./pruu/pruu.module').then((m) => m.PruuModule),
+  },
   { path: 'usuario', component: UsuarioDetalheComponent },
-  { path: 'usuario/listar', canActivate: [AuthGuard], component: UsuarioListagemComponent },
-  { path: 'denuncia', canActivate: [AuthGuard], component: DenunciaListagemComponent },
+  {
+    path: 'usuario/listar',
+    canActivate: [AuthGuard],
+    component: UsuarioListagemComponent,
+  },
+  {
+    path: 'denuncia',
+    canActivate: [AuthGuard],
+    component: DenunciaListagemComponent,
+  },
+  {
+    path: 'denuncia/:id',
+    canActivate: [AuthGuard],
+    component: DenunciaDetalheComponent,
+  },
   { path: '**', redirectTo: 'pruu' },
 ];
