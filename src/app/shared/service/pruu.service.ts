@@ -44,4 +44,5 @@ export class PruuService {
   pesquisarUsuariosQueCurtiram(idPruu: string): Observable<Array<Usuario>> {
     return this.httpClient.get<Array<Usuario>>(`${this.API}/usuarios-que-curtiram/${idPruu}`);
   }
+
 }
