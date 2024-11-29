@@ -9,6 +9,8 @@ import { DenunciaService } from '../../shared/service/denuncia.service';
 import { Motivo } from '../../shared/model/enum/motivo';
 import { UsuarioService } from '../../shared/service/usuario.service';
 import Swal from 'sweetalert2';
+import { StatusDenuncia } from '../../shared/model/enum/status-denuncia';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-pruu-listagem',
@@ -22,7 +24,7 @@ export class PruuListagemComponent implements OnInit {
   totalPaginas: number = 0;
   mensagemErro: string = '';
   readonly itensPorPagina: number = 5;
-  usuarioAutenticado!: Usuario;
+  usuarioAutenticadoId!: string;
   pruuCurtido: Pruu[] = [];
 
   public denuncia!: Denuncia;
@@ -38,6 +40,17 @@ export class PruuListagemComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    let token;
+    if(localStorage){
+      token = localStorage.getItem('tokenUsuarioAutenticado');
+    }
+
+    console.log(token) // NAO DECODIFICA PRA JSON, VEM COMO UNDEFINED
+    if(token){
+      let tokenJSON: any = jwtDecode(token);
+      this.usuarioAutenticadoId = tokenJSON?.userId;
+    }
+
     this.pruuSeletor.limite = this.itensPorPagina;
     this.pruuSeletor.pagina = 1;
 
@@ -121,72 +134,44 @@ export class PruuListagemComponent implements OnInit {
     });
   }
 
-  // denunciar(pruu: Pruu, motivo: Motivo): void {
-  //   const novaDenuncia: Denuncia = {
-  //     id: 0,
-  //     pruu: pruu,
-  //     usuario: this.usuarioAutenticado,
-  //     motivo: motivo,
-  //     status: StatusDenuncia.PENDENTE,
-  //   };
-
-  //   this.denunciaService.cadastrar(novaDenuncia).subscribe({
-  //     next: () => console.log('Denúncia criada com sucesso!'),
-  //     error: (erro) => console.error('Erro ao criar denúncia', erro),
-  //   });
-  // }
-
-  // public denunciarPruu(pruu: Pruu): void {
+  // denunciar(pruu: Pruu): void {
   //   Swal.fire({
   //     title: 'Denunciar Pruu',
   //     input: 'select',
   //     inputOptions: {
   //       [Motivo.SPAM]: 'Spam',
-  //       [Motivo.DISCURSO_ODIO]: 'Discuso de ódio',
-  //       [Motivo.CONTEUDO_INAPROPRIADO]: 'Inapropriado',
+  //       [Motivo.DISCURSO_ODIO]: 'Discurso de ódio',
+  //       [Motivo.CONTEUDO_INAPROPRIADO]: 'Conteúdo inapropriado',
   //     },
   //     inputLabel: 'Selecione o motivo da denúncia',
-  //     inputPlaceholder: 'Escolha um motivo',
+  //     inputPlaceholder: 'O que não te agradou neste Pruu?',
   //     showCancelButton: true,
   //     confirmButtonText: 'Enviar',
   //     cancelButtonText: 'Cancelar',
   //     inputValidator: (value) => {
   //       if (!value) {
-  //         return 'Você precisa selecionar um motivo para denunciar!';
+  //         return 'Você precisa escolher um motivo para denunciar!';
   //       }
   //       return null;
   //     },
   //   }).then((resultado) => {
+  //     console.log(resultado.value);
   //     if (resultado.isConfirmed) {
   //       this.denuncia = {
+  //         id: 0,
+  //         pruu: pruu,
+  //         usuario: this.usuarioAutenticado, // n tem ninguem autenticado cara
   //         motivo: resultado.value,
-  //         pruu: {
-  //           id: pruu.id,
-  //           texto: pruu.texto,
-  //           imagem: pruu.imagem || '',
-  //           quantidadeCurtidas: pruu.quantidadeCurtidas,
-  //           criadoEm: new Date(pruu.criadoEm),
-  //           quantidadeDenuncias: pruu.quantidadeDenuncias,
-  //           usuario: new Usuario,
-  //           usuariosQueCurtiram: [],
-  //           denuncias: [],
-  //           bloqueado: false
-  //         } ,
-
+  //         status: StatusDenuncia.PENDENTE,
   //       };
-
-  //       this.denunciaService.criarDenuncia(this.denuncia).subscribe({
-  //         next: (response) => {
-  //           Swal.fire('Enviado!', 'Sua denúncia foi registrada.', 'success');
-  //         },
-  //         error: (erro) => {
-  //           console.error('Erro ao denunciar:', erro);
+  //       this.denunciaService.cadastrar(this.denuncia).subscribe({
+  //         next: () => Swal.fire('Denúncia criada com sucesso!'),
+  //         error: (erro) =>
   //           Swal.fire(
   //             'Erro!',
   //             'Ocorreu um problema ao registrar sua denúncia.',
   //             'error'
-  //           );
-  //         },
+  //           ),
   //       });
   //     }
   //   });
@@ -216,7 +201,18 @@ export class PruuListagemComponent implements OnInit {
     });
   }
 
-  public excluir(pruu: Pruu): void {
+  pesquisarPruusQueOUsuarioCurtiu(): void {
+    this.pruuSeletor.idUsuario = this.usuarioAutenticadoId;
+    this.pruuService.pesquisarComFiltro(this.pruuSeletor).subscribe({
+      next: (pruus) => {
+        this.pruus = pruus;
+        this.filtroAtivo = true;
+      },
+      error: (erro) => console.error('Erro ao pesquisar os Pruus curtidos pelo usuário', erro),
+    });
+  }
+
+  excluir(pruu: Pruu): void {
     Swal.fire({
       title: 'Tem certeza?',
       text: 'Esta ação não pode ser desfeita!',
