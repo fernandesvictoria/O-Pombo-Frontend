@@ -10,3 +10,16 @@ export class Denuncia {
   motivo!: Motivo;
   status: StatusDenuncia = StatusDenuncia.PENDENTE;
 }
+
+export class DenunciaDados {
+  id!: string;
+  nomeDenunciante!: string;
+  pruuId!: string;
+  textoPruu!: string;
+  imagemPruu!: string;
+  usuarioId!: string;
+  nomeUsuario!: string;
+  motivo!: string;
+  status!: string;
+  criadoEm!: string;
+}
