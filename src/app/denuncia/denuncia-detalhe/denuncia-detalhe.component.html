@@ -1,63 +1,36 @@
- <app-menu></app-menu>
-<!-- <div style="background-color: #080404; min-height: 100vh; padding: 50px; margin-left: 25%; color: white;">
-  Formulário de Denúncia
-  <h2 class="text-center mb-4">Denunciar Postagem</h2>
-  <div class="pruu-info card p-4 mb-4" style="background-color: #202327; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <h3 class="mb-3">Informações da Postagem</h3>
-    <p><strong>Data de Criação:</strong> {{ pruu.criadoEm | date }}</p>
-    <p><strong>Título:</strong> {{ pruu.usuario.nome }}</p>
-    <p><strong>Descrição:</strong> {{ pruu.texto }}</p>
-  </div>
+<app-menu></app-menu>
 
-  <div class="denuncia-info card p-4" style="background-color: #202327; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <form (ngSubmit)="inserir()" class="d-flex flex-column align-items-center">
+<div style="background-color: #080404; min-height: 100vh; padding: 50px; margin-left: 25%; color: white;">
+  <h2 class="text-center mb-4">Detalhes da Denúncia</h2>
 
-      <div class="form-group mb-3" style="width: 100%; max-width: 500px;">
-        <label for="motivo" class="text-light mb-2">Motivo</label>
-        <select class="form-control border-dark text-white" name="motivo" [(ngModel)]="denuncia.motivo" required
-          style="background-color: #333; border-radius: 20px;">
-          <option *ngFor="let mot of motivos" [value]="mot">{{ mot }}</option>
-        </select>
+  <div class="card shadow-sm text-light" style="background-color: #080808; border: 1px solid #413e3e;">
+    <div class="card-body">
+      <!-- Detalhes da Denúncia -->
+      <div class="d-flex justify-content-between align-items-center">
+        <h5 class="card-title mb-0">{{denuncia.usuario.nome}}</h5>
+        <p class="card-text text-end mb-2"><small class="text-light">{{denuncia.pruu.criadoEm}}</small></p>
       </div>
 
-      <button type="submit" class="btn btn-primary w-100 mt-3" style="background-color: #1d99ed; border-radius: 20px; padding: 12px;">
-        Enviar Denúncia
-      </button>
-    </form>
-  </div>
-</div> -->
+      <p class="card-text">{{denuncia.pruu.texto}}</p>
 
+      <p class="card-text mb-1"><strong>Motivo da denúncia:</strong>{{denuncia.motivo}}</p>
+      <p class="card-text"><small class="text-dark-emphasis">Denunciado por: {{denuncia.usuario.nome}}</small></p>
 
-<div class="container">
-  <h1>Detalhes da Denúncia</h1>
+      <!-- Opções de Ação -->
+      <!-- <div class="d-flex gap-2 justify-content-center">
+        <button class="btn btn-danger" style="border-radius: 20px;" (click)="analisarDenuncia(denuncia.id, )">
+          Bloquear
+        </button>
+        <button class="btn btn-success" style="border-radius: 20px;" (click)="analisarDenuncia(denuncia.id, 'APROVADO')">
+          Aprovar
+        </button>
+      </div> -->
 
-  <div *ngIf="denuncia">
-    <div class="form-group">
-      <label for="descricao">Descrição:</label>
-      <textarea id="descricao" [(ngModel)]="denuncia.motivo" rows="4" class="form-control" disabled></textarea>
+      <div class="d-flex justify-content-center mt-3">
+        <button class="btn btn-secondary" (click)="voltarParaListagem()" style="border-radius: 20px;">
+          Voltar para a lista
+        </button>
+      </div>
     </div>
-
-    <div class="form-group">
-      <label for="status">Status:</label>
-      <select id="status" [(ngModel)]="denuncia.status" class="form-control">
-        <option value="PENDENTE">Pendente</option>
-        <option value="ACEITA">Aceita</option>
-        <option value="RECUSADA">Recusada</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="pruu">PRUU Relacionado:</label>
-      <input id="pruu" [(ngModel)]="pruu.usuario.nome" class="form-control" disabled />
-    </div>
-
-    <div class="buttons">
-      <!-- <button (click)="atualizarDenuncia()" class="btn btn-primary">Salvar Alterações</button> -->
-      <button (click)="voltarParaListagem()" class="btn btn-secondary">Voltar</button>
-    </div>
-  </div>
-
-  <div *ngIf="!denuncia">
-    <p>Carregando a denúncia...</p>
   </div>
 </div>

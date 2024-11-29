@@ -1,30 +1,36 @@
-import { Component, OnInit } from "@angular/core";
-import { Denuncia } from "../../shared/model/denuncia";
-import { Pruu } from "../../shared/model/pruu";
-import { ActivatedRoute, Router } from "@angular/router";
-import { DenunciaService } from "../../shared/service/denuncia.service";
-import { DenunciaSeletor } from "../../shared/seletor/denuncia.seletor";
-import { StatusDenuncia } from "../../shared/model/enum/status-denuncia";
-import Swal from "sweetalert2";
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import Swal from 'sweetalert2';
+import { MenuModule } from '../../menu/menu.module';
+import { Denuncia } from '../../shared/model/denuncia';
+import { StatusDenuncia } from '../../shared/model/enum/status-denuncia';
+import { Pruu } from '../../shared/model/pruu';
+import { DenunciaSeletor } from '../../shared/seletor/denuncia.seletor';
+import { DenunciaService } from '../../shared/service/denuncia.service';
 
 @Component({
   selector: 'app-denuncia-detalhe',
   templateUrl: './denuncia-detalhe.component.html',
+  standalone: true,
+  imports: [FormsModule, RouterModule, CommonModule, MenuModule],
 })
 export class DenunciaDetalheComponent implements OnInit {
   denunciaSeletor: DenunciaSeletor = new DenunciaSeletor();
   denuncia!: Denuncia;
-  idDenuncia!: number;
+  status!: string;
+  idDenuncia!: string;
   pruu!: Pruu;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private denunciaService: DenunciaService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.idDenuncia = Number(this.route.snapshot.paramMap.get('id'));
+    this.idDenuncia = this.route.snapshot.paramMap.get('id')!;
     this.carregarDenuncia();
   }
 
@@ -32,7 +38,7 @@ export class DenunciaDetalheComponent implements OnInit {
     this.denunciaService.pesquisarPorId(this.idDenuncia).subscribe({
       next: (denuncia) => {
         this.denuncia = denuncia;
-        this.pruu = denuncia.pruu; 
+        this.pruu = denuncia.pruu;
       },
       error: (erro) => {
         console.error('Erro ao carregar denúncia', erro);
@@ -41,13 +47,36 @@ export class DenunciaDetalheComponent implements OnInit {
     });
   }
 
-  analisarDenuncia(idDenuncia: string, novoStatus: StatusDenuncia): void {
-    this.denunciaService.atualizar(idDenuncia, novoStatus).subscribe({
-      next: denuncia => {
-        Swal.fire('Denúncia atualizada com sucesso!', '', 'success');
-        this.voltarParaListagem();
+  atualizarStatus(pruu: Pruu): void {
+    Swal.fire({
+      title: 'Denunciar Pruu',
+      input: 'select',
+      inputOptions: {
+        [StatusDenuncia.ACEITA]: 'a',
+        [StatusDenuncia.REJEITADA]: 'dcfdffg de ódio',
       },
-      error: erro => console.error('Erro ao bloquear denúncia', erro)
+      inputLabel: 'Selecione o motivo da denúncia',
+      inputPlaceholder: 'O que não te agradou neste Pruu?',
+      showCancelButton: true,
+      confirmButtonText: 'Enviar',
+      cancelButtonText: 'Cancelar',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'Você precisa escolher um motivo para denunciar!';
+        }
+        this.status = value;
+        return null;
+      },
+    }).then((resultado) => {
+      this.denunciaService.atualizar(this.idDenuncia, this.status).subscribe({
+        next: () => Swal.fire('Denúncia criada com sucesso!'),
+        error: (erro) =>
+          Swal.fire(
+            'Erro!',
+            'Ocorreu um problema ao registrar sua denúncia.',
+            'error'
+          ),
+      });
     });
   }
 
