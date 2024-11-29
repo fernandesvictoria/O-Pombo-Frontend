@@ -1,51 +1,63 @@
 <app-menu></app-menu>
 <div class="container-fluid" style="background-color: #080404; min-height: 100vh; padding: 50px; margin-left: 10%;">
+  <div class="container-fluid" style="margin-left: 10%;">
+    <!-- Formulário de Filtro -->
+    <form class="d-flex flex-column align-items-center mb-4">
+      <div class="d-flex flex-wrap mb-3" style="gap: 10px;"> <!-- Adicionando gap consistente -->
 
-  <!-- Formulário de Filtro -->
-  <form class="d-flex flex-column align-items-center mb-4">
-    <div class="d-flex gap-3 mb-3 justify-content-center">
+        <!-- Filtro por Data -->
+        <div class="row" style="margin-bottom: 5px;">
+          <label for="dataInicio" class="text-white">De</label>
+          <input type="date" class="form-control text-white" [(ngModel)]="pruuSeletor.criadoEmInicio" name="dataCriacao"
+            style="background-color: #202327; border-radius: 10px; width: 150px;" />
+        </div>
 
-      <!-- Filtro por Data -->
-      <div class="row mb-3">
-        <label for="dataInicio" class="text-white">De</label>
-        <input type="date" class="form-control text-white" [(ngModel)]="pruuSeletor.criadoEmInicio" name="dataCriacao"
-          style="background-color: #202327; border-radius: 10px; width: 200px;" />
+        <div class="row" style="margin-bottom: 5px;">
+          <label for="dataFim" class="text-white">Até</label>
+          <input type="date" class="form-control text-white" [(ngModel)]="pruuSeletor.criadoEmFim" name="dataFim"
+            style="background-color: #202327; border-radius: 10px; width: 150px;" />
+        </div>
+
+        <!-- Filtro por Usuário -->
+        <div class="row" style="margin-bottom: 5px;">
+          <label for="usuario" class="text-white">Usuário</label>
+          <select class="form-control text-white" [(ngModel)]="pruuSeletor.idUsuario" name="usuario"
+            style="background-color: #202327; border-radius: 10px; width: 200px;">
+            <option *ngFor="let usuario of usuarios" [value]="usuario.id">{{ usuario.nome }}</option>
+          </select>
+        </div>
+
+        <!-- Filtro por texto -->
+        <div class="row" style="margin-bottom: 5px; margin-right: 15px;">
+          <label for="texto" class="text-white">Busca por conteúdo de pruu</label>
+          <input type="text" class="form-control text-white" placeholder="Digite as palavras a serem localizadas..."
+            aria-label="Pesquisa" name="texto" style="background-color: #202327; border-radius: 10px; width: 200px;"
+            [(ngModel)]="pruuSeletor.texto" />
+        </div>
+
       </div>
-      <div class="row mb-3">
-        <label for="dataFim" class="text-white">Até</label>
-        <input type="date" class="form-control text-white" [(ngModel)]="pruuSeletor.criadoEmFim" name="dataFim"
-          style="background-color: #202327; border-radius: 10px; width: 200px;" />
-      </div>
+    </form>
+  </div>
 
-      <!-- Filtro por Usuário -->
-      <div class="row mb-3">
-        <label for="usuario" class="text-white">Usuário</label>
-        <select class="form-control text-white" [(ngModel)]="pruuSeletor.idUsuario" name="usuario"
-          style="background-color: #202327; border-radius: 10px; width: 200px;">
-          <option *ngFor="let usuario of usuarios" [value]="usuario.id">{{ usuario.nome }}</option>
-        </select>
-      </div>
-    </div>
+  <!-- Botões -->
+  <div class="d-flex gap-2 justify-content-center">
 
+    <!-- arrumar função botão -->
+    <button type="button" class="btn btn-light" (click)="pesquisarPruusQueOUsuarioCurtiu()"
+      style="border-radius: 20px; width: 150px;">
+      <i class="bi bi-heart"></i> Meus Likes
+    </button>
+    <button type="button" class="btn btn-light" (click)="limparFiltros()" style="border-radius: 20px; width: 150px;">
+      <i class="bi bi-trash"></i>Limpar
+    </button>
+    <button type="button" class="btn btn-light" (click)="aplicarFiltros()" style="border-radius: 20px; width: 150px;">
+      <i class="bi bi-search"></i> Buscar
+    </button>
+    <button class="btn btn-primary" [routerLink]="'/pruu/cadastrar'" style="border-radius: 20px; width: 120px;">
+      <i class="bi bi-pencil"></i> Post
+    </button>
+  </div>
 
-    <!-- Botões -->
-    <div class="d-flex gap-2 justify-content-center">
-
-      <!-- arrumar função botão -->
-      <button type="button" class="btn btn-light" (click)="pesquisarPruusQueOUsuarioCurtiu()"
-        style="border-radius: 20px; width: 150px;">Meus Likes</button>
-
-      <button type="button" class="btn btn-light" (click)="aplicarFiltros()" style="border-radius: 20px; width: 150px;">
-        <i class="bi bi-search"></i> Buscar
-      </button>
-      <button type="button" class="btn btn-light" (click)="limparFiltros()" style="border-radius: 20px; width: 150px;">
-        Limpar
-      </button>
-      <button class="btn btn-primary" [routerLink]="'/pruu/cadastrar'" style="border-radius: 20px; width: 120px;">
-        Post
-      </button>
-    </div>
-  </form>
 
   <h2 class="text-center mb-4 text-white " style="padding-top: 10px;">Meu Feed</h2>
 

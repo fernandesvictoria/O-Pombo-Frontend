@@ -1,21 +1,28 @@
-
 <div class="container-fluid" style="min-height: 100vh; padding: 0; position: fixed; z-index: 1; width: 25%;">
   <!-- Menu Lateral -->
-  <div style="background-color: #080404; height: 100vh; display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid #333232; position: fixed; width: 25%;">
+  <div
+    style="background-color: #080404; height: 100vh; display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid #333232; position: fixed; width: 25%;">
     <!-- Conteúdo do Menu Lateral -->
     <div>
       <div class="py-5" style="padding-left: 10px;">
-        <img src="assets/images/pigeon.png" alt="Logo Pombo" class="img-fluid" style="max-width: 70px; margin-left: 10px;">
+        <img src="assets/images/pigeon.png" alt="Logo Pombo" class="img-fluid"
+          style="max-width: 70px; margin-left: 10px;">
         <h3 class="text-white pt-3 text-start" style="padding-left: 22px;">Bem-vindo</h3>
       </div>
       <nav>
-        <a href="/pruu" class="w-100 mb-5 text-white fw-bold text-start d-block" style="text-decoration: none; font-size: 1.1rem; padding-left: 35px;">Feed</a>
-        <a href="#" class="w-100 mb-5 text-white fw-bold text-start d-block" style="text-decoration: none; font-size: 1.1rem; padding-left: 35px;">Meu Histórico</a>
-        <a href="/usuario" class="w-100 mb-3 text-white fw-bold text-start d-block" style="text-decoration: none; font-size: 1.1rem; padding-left: 35px;">Editar Perfil</a>
+        <a href="/pruu" class="w-100 mb-5 text-white fw-bold text-start d-block"
+          style="text-decoration: none; font-size: 1.1rem; padding-left: 35px;">Feed</a>
+        <a href="#" class="w-100 mb-5 text-white fw-bold text-start d-block"
+          style="text-decoration: none; font-size: 1.1rem; padding-left: 35px;">Meu Histórico</a>
+        <a href="/usuario" class="w-100 mb-3 text-white fw-bold text-start d-block"
+          style="text-decoration: none; font-size: 1.1rem; padding-left: 35px;">Editar Perfil</a>
       </nav>
     </div>
     <div class="d-flex flex-column align-items-center mb-4" style="margin-top: auto;">
-      <a href="/pruu/cadastrar" class="btn btn-primary w-75 mb-3" style="background-color: #1d99ed; border-radius: 20px;">Post</a>
+      <a href="/pruu/cadastrar" class="btn btn-primary w-75 mb-3"
+        style="background-color: #1d99ed; border-radius: 20px;">
+        <i class="bi bi-pencil"></i>
+        Post</a>
       <button (click)="sair()" class="btn btn-danger w-75 mb-3" style="border-radius: 20px;">Logout</button>
     </div>
   </div>
