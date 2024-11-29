@@ -10,6 +10,8 @@ import Swal from 'sweetalert2';
 import { Motivo } from '../../shared/model/enum/motivo';
 import { MenuModule } from '../../menu/menu.module';
 import { Pruu } from '../../shared/model/pruu';
+import { UsuarioService } from '../../shared/service/usuario.service';
+import { Usuario } from '../../shared/model/usuario';
 
 @Component({
   selector: 'app-denuncia-listagem',
@@ -24,23 +26,24 @@ export class DenunciaListagemComponent implements OnInit {
   denunciaSeletor: DenunciaSeletor = new DenunciaSeletor();
   novoStatus: StatusDenuncia = StatusDenuncia.PENDENTE;
   denuncia!: Denuncia;
+  usuarios: Usuario[] = [];
 
   constructor(
     private denunciaService: DenunciaService,
-    private router: Router
+    private router: Router,
+    private usuarioService: UsuarioService
   ) {}
 
   ngOnInit(): void {
     this.pesquisarTodas();
+    this.buscarUsuarios();
   }
 
   pesquisarTodas(): void {
-      this.denunciaService.pesquisarTodas().subscribe(
-        resultado => {
-          this.dadosDenuncias = resultado;
-          console.log(resultado);
-        }
-      );
+    this.denunciaService.pesquisarTodas().subscribe((resultado) => {
+      this.dadosDenuncias = resultado;
+      console.log(resultado);
+    });
   }
 
   pesquisarComFiltros(): void {
@@ -51,6 +54,22 @@ export class DenunciaListagemComponent implements OnInit {
       },
       error: (erro) => console.error('Erro ao aplicar filtros', erro),
     });
+  }
+
+  
+  private buscarUsuarios() {
+    this.usuarioService.pesquisarTodos().subscribe(
+      (r) => {
+        this.usuarios = r;
+      },
+      (e) => {
+        Swal.fire({
+          title: 'Erro!',
+          text: 'Erro ao consultar todos os clientes: ' + e.error.mensagem,
+          icon: 'error',
+        });
+      }
+    );
   }
 
   limparFiltros(): void {

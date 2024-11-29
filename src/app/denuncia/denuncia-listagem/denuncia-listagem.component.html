@@ -4,13 +4,30 @@
   <form class="d-flex flex-column align-items-center mb-4">
     <div class="d-flex gap-2 mb-3 justify-content-center">
       <!-- Filtro por Data -->
-      <input type="date" class="form-control border-dark text-white" [(ngModel)]="denunciaSeletor"
-        name="dataCriacao" placeholder="Data" required
-        style="background-color: #202327; border-radius: 20px; width: 250px;" />
+
+
+
+        <!-- Filtro por Data -->
+        <div class="row" style="margin-bottom: 5px;">
+          <label for="dataInicio" class="text-white">De</label>
+          <input type="date" class="form-control text-white" [(ngModel)]="denunciaSeletor.criadoEmInicio" name="dataCriacao"
+            style="background-color: #202327; border-radius: 10px; width: 150px;" />
+        </div>
+
+        <div class="row" style="margin-bottom: 5px;">
+          <label for="dataFim" class="text-white">Até</label>
+          <input type="date" class="form-control text-white" [(ngModel)]="denunciaSeletor.criadoEmFim" name="dataFim"
+            style="background-color: #202327; border-radius: 10px; width: 150px;" />
+        </div>
 
       <!-- Filtro por Usuário -->
-      <input type="text" class="form-control border-dark text-white" [(ngModel)]="denunciaSeletor" name="usuario"
-        placeholder="Usuário" required style="background-color: #202327; border-radius: 20px; width: 250px;" />
+        <div class="row" style="margin-bottom: 5px;">
+          <label for="usuario" class="text-white">Usuário</label>
+          <select class="form-control text-white" [(ngModel)]="denunciaSeletor.idUsuario" name="usuario"
+            style="background-color: #202327; border-radius: 10px; width: 200px;">
+            <option *ngFor="let usuario of usuarios" [value]="usuario.id">{{ usuario.nome }}</option>
+          </select>
+        </div>
     </div>
 
     <!-- Botões de Buscar e Limpar Lado a Lado -->
@@ -27,12 +44,9 @@
         Limpar
       </button>
 
-      <button class="btn btn-primary" [routerLink]="'/pruus/detalhe'" style="border-radius: 20px; width: 120px;">
-        Post
-      </button>
     </div>
   </form>
-  <h2 class="text-center mb-4">Posts Denunciados</h2>
+  <h2 class="text-center mb-4">Pruus Denunciados</h2>
   <div class="d-flex flex-wrap justify-content-center">
     <div *ngFor="let denuncia of dadosDenuncias" class="mb-4" style="width: 100%; max-width: 600px;">
       <div class="card shadow-sm text-light" style="background-color: #080808; border: 1px solid #413e3e;">
@@ -40,7 +54,7 @@
 
           <div class="d-flex justify-content-between align-items-center">
             <h5 class="card-title mb-0">{{denuncia.nomeUsuario}}</h5>
-            <p class="card-text text-end mb-2"><small class="text-light">{{denuncia.criadoEm}}</small></p>
+            <p class="card-text text-end mb-2"><small class="text-light">{{denuncia.criadoEm | date:'dd/MM/yyyy HH:mm'}}</small></p>
           </div>
 
           <p class="card-text">{{denuncia.textoPruu}}</p>
