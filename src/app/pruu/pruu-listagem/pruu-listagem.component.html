@@ -1,8 +1,10 @@
 <app-menu></app-menu>
-<div class="container-fluid" style="background-color: #080404; min-height: 100vh; padding: 50px;">
+<div class="container-fluid" style="background-color: #080404; min-height: 100vh; padding: 50px; margin-left: 10%;">
+
   <!-- Formulário de Filtro -->
   <form class="d-flex flex-column align-items-center mb-4">
     <div class="d-flex gap-3 mb-3 justify-content-center">
+
       <!-- Filtro por Data -->
       <div class="row mb-3">
         <label for="dataInicio" class="text-white">De</label>
@@ -23,15 +25,16 @@
           <option *ngFor="let usuario of usuarios" [value]="usuario.id">{{ usuario.nome }}</option>
         </select>
       </div>
-
-      <div class="row mb-3">
-        <label for="usuario" class="text-white">Meus likes</label>
-        <button (click)="pesquisarPruusQueOUsuarioCurtiu()">Meus</button>
-      </div>
     </div>
+
 
     <!-- Botões -->
     <div class="d-flex gap-2 justify-content-center">
+
+      <!-- arrumar função botão -->
+      <button type="button" class="btn btn-light" (click)="pesquisarPruusQueOUsuarioCurtiu()"
+        style="border-radius: 20px; width: 150px;">Meus Likes</button>
+
       <button type="button" class="btn btn-light" (click)="aplicarFiltros()" style="border-radius: 20px; width: 150px;">
         <i class="bi bi-search"></i> Buscar
       </button>
@@ -44,16 +47,13 @@
     </div>
   </form>
 
-  <h2 class="text-center mb-4 text-white">Meu Feed</h2>
+  <h2 class="text-center mb-4 text-white " style="padding-top: 10px;">Meu Feed</h2>
 
   <!-- Feed de Posts -->
   <div class="d-flex flex-column align-items-center">
     <div *ngFor="let pruu of pruus" class="mb-4" style="width: 100%; max-width: 600px;">
-      <!-- Post Esqueleto -->
-      <div class="d-flex gap-3 p-3" style="background-color: #202327; border-radius: 10px;">
-        <!-- Conteúdo -->
+      <div class="d-flex gap-3 p-3" style="background-color: #080404; border-radius: 10px;border: 1px solid #383434;">
         <div style="flex-grow: 1;">
-          <!-- Cabeçalho -->
           <div class="d-flex justify-content-between align-items-center">
             <!-- Imagem de Perfil -->
             <div class="d-flex align-items-center gap-2">
@@ -62,30 +62,23 @@
                 style="width: 50px; height: 50px; object-fit: cover;" />
               <strong class="text-white">{{ pruu.usuario.nome }}</strong>
             </div>
-            <!-- Data Criada -->
             <span class="text-white" style="font-size: 0.85rem;">{{ pruu.criadoEm | date:'dd/MM/yyyy' }}</span>
           </div>
-
-          <!-- Texto -->
           <p class="text-white mt-2 mb-2">{{ pruu.texto }}</p>
-
           <!-- Imagem (se existir) -->
           <img *ngIf="pruu.imagem" [src]="pruu.imagem" alt="Imagem do Post" class="img-fluid rounded"
             style="max-height: 300px; object-fit: cover; width: 100%;" />
-
-          <!-- Ações -->
           <div class="d-flex align-items-center gap-1 mt-3 text-muted">
-            <!-- Curtir -->
+
             <span class="text-white d-flex align-items-center like-button" [class.liked]="pruu.curtido"
               (click)="curtir(pruu)">
               <i class="bi" [ngClass]="pruu.curtido ? 'bi-heart-fill' : 'bi-heart'"></i>
               <span class="ms-1">{{ pruu.quantidadeCurtidas }}</span>
             </span>
 
-            <!-- Botão Likes -->
             <button type="button" class="btn btn-link p-0 text-white" (click)="usuariosQueCurtiram(pruu)"
               style="text-decoration: underline; margin-left: -2px;">
-                 likes
+              likes
             </button>
           </div>
           <div class="align-items-center gap-1 mt-3 text-muted">
