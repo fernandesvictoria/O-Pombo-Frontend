@@ -42,7 +42,7 @@
   <div class="d-flex gap-2 justify-content-center">
 
     <!-- arrumar função botão -->
-    <button type="button" class="btn btn-light" (click)="pesquisarPruusQueOUsuarioCurtiu()"
+    <button type="button" class="btn btn-light" (click)="pesquisarPruusCurtidosPeloUsuario()"
       style="border-radius: 20px; width: 150px;">
       <i class="bi bi-heart"></i> Meus Likes
     </button>
@@ -78,8 +78,7 @@
             <!-- Botões de Data e Opções -->
             <div class="d-flex flex-column align-items-end" style="gap: 5px;">
               <!-- Botão de opções -->
-              <p class="text-white fs-4 mb-0" data-bs-toggle="modal" data-bs-target="#opcoesModal"
-                style="cursor: pointer;">
+              <p class="text-white fs-4 mb-0" data-bs-toggle="modal" data-bs-target="#opcoesModal" style="cursor: pointer;" (click)="openModal(pruu)">
                 ...
               </p>
 
@@ -120,8 +119,10 @@
                 </div>
                 <div class="modal-body">
                   <div class="d-flex flex-column gap-3">
-                    <button class="btn btn-danger" (click)="excluir(pruu)">Excluir</button>
-                    <button type="button" class="btn btn-primary" (click)="denunciar(pruu)">Denunciar</button>
+                    <button class="btn btn-danger" *ngIf="selectedPruu?.usuario?.id === usuarioAutenticadoId" (click)="excluir(selectedPruu?.id)">
+                      Excluir
+                    </button>
+                    <button type="button" class="btn btn-primary" (click)="denunciar(selectedPruu?.id)">Denunciar</button>
                   </div>
                 </div>
               </div>

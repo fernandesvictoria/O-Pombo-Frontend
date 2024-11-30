@@ -25,8 +25,8 @@ export class PruuService {
     return this.httpClient.post<Pruu>(`${this.API}/curtir/${idPruu}`, {})
   }
 
-  excluir(idPruu: string, idUsuario: string): Observable<boolean> {
-    return this.httpClient.delete<boolean>(`${this.API}/excluir/${idPruu}/${idUsuario}`, {})
+  excluir(idPruu: string): Observable<boolean> {
+    return this.httpClient.delete<boolean>(`${this.API}/excluir/${idPruu}`, {})
   }
 
   pesquisarTodos(): Observable<Array<Pruu>> {
@@ -43,6 +43,10 @@ export class PruuService {
 
   pesquisarUsuariosQueCurtiram(idPruu: string): Observable<Array<Usuario>> {
     return this.httpClient.get<Array<Usuario>>(`${this.API}/usuarios-que-curtiram/${idPruu}`);
+  }
+
+  pesquisarPruusCurtidosPeloUsuario(idUsuario: string): Observable<Array<Pruu>> {
+    return this.httpClient.get<Array<Pruu>>(`${this.API}/meus-likes/${idUsuario}`);
   }
 
 }

@@ -11,15 +11,13 @@ import { UsuarioService } from '../../shared/service/usuario.service';
 import Swal from 'sweetalert2';
 import { StatusDenuncia } from '../../shared/model/enum/status-denuncia';
 import { jwtDecode } from 'jwt-decode';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-pruu-listagem',
   templateUrl: './pruu-listagem.component.html',
 })
 export class PruuListagemComponent implements OnInit {
-denunciar(_t54: Pruu) {
-throw new Error('Method not implemented.');
-}
   usuarios: Usuario[] = [];
   pruus: Pruu[] = [];
   filtroAtivo: boolean = false;
@@ -28,7 +26,9 @@ throw new Error('Method not implemented.');
   mensagemErro: string = '';
   readonly itensPorPagina: number = 5;
   usuarioAutenticadoId!: string;
+  usuarioAutenticado: Usuario = new Usuario();
   pruuCurtido: Pruu[] = [];
+  selectedPruu: any;
 
   public denuncia!: Denuncia;
   // Define o tipo corretamente para a lista de motivos
@@ -39,19 +39,24 @@ throw new Error('Method not implemented.');
     private pruuService: PruuService,
     private denunciaService: DenunciaService,
     private usuarioService: UsuarioService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private cookieService: CookieService
+  ) { }
 
   ngOnInit(): void {
     let token;
-    if(localStorage){
-      token = localStorage.getItem('tokenUsuarioAutenticado');
+    if (this.cookieService.check('tokenUsuarioAutenticado')) {
+      token = this.cookieService.get('tokenUsuarioAutenticado');
     }
-
-    console.log(token) // NAO DECODIFICA PRA JSON, VEM COMO UNDEFINED
-    if(token){
+    if (token) {
       let tokenJSON: any = jwtDecode(token);
-      this.usuarioAutenticadoId = tokenJSON?.userId;
+      this.usuarioAutenticadoId = tokenJSON?.idUsuario;
+      this.usuarioService.pesquisarPorId(this.usuarioAutenticadoId).subscribe({
+        next: (usuario) => {
+          this.usuarioAutenticado = usuario;
+        },
+        error: (erro) => console.error('Erro ao buscar o usuário autenticado', erro),
+      });
     }
 
     this.pruuSeletor.limite = this.itensPorPagina;
@@ -77,7 +82,7 @@ throw new Error('Method not implemented.');
       (e) => {
         Swal.fire({
           title: 'Erro!',
-          text: 'Erro ao consultar todos os clientes: ' + e.error.mensagem,
+          text: 'Erro ao consultar todos os pruus: ' + e.error?.mensagem,
           icon: 'error',
         });
       }
@@ -86,7 +91,10 @@ throw new Error('Method not implemented.');
 
   pesquisarTodos(): void {
     this.pruuService.pesquisarComFiltro(this.pruuSeletor).subscribe({
-      next: (pruus) => (this.pruus = pruus),
+      next: (pruus) => {
+        this.pruus = [];
+        this.pruus = pruus
+      },
       error: (erro) => console.error('Erro ao buscar Pruus', erro),
     });
   }
@@ -137,48 +145,49 @@ throw new Error('Method not implemented.');
     });
   }
 
-  // denunciar(pruu: Pruu): void {
-  //   Swal.fire({
-  //     title: 'Denunciar Pruu',
-  //     input: 'select',
-  //     inputOptions: {
-  //       [Motivo.SPAM]: 'Spam',
-  //       [Motivo.DISCURSO_ODIO]: 'Discurso de ódio',
-  //       [Motivo.CONTEUDO_INAPROPRIADO]: 'Conteúdo inapropriado',
-  //     },
-  //     inputLabel: 'Selecione o motivo da denúncia',
-  //     inputPlaceholder: 'O que não te agradou neste Pruu?',
-  //     showCancelButton: true,
-  //     confirmButtonText: 'Enviar',
-  //     cancelButtonText: 'Cancelar',
-  //     inputValidator: (value) => {
-  //       if (!value) {
-  //         return 'Você precisa escolher um motivo para denunciar!';
-  //       }
-  //       return null;
-  //     },
-  //   }).then((resultado) => {
-  //     console.log(resultado.value);
-  //     if (resultado.isConfirmed) {
-  //       this.denuncia = {
-  //         id: 0,
-  //         pruu: pruu,
-  //         usuario: this.usuarioAutenticado, // n tem ninguem autenticado cara
-  //         motivo: resultado.value,
-  //         status: StatusDenuncia.PENDENTE,
-  //       };
-  //       this.denunciaService.cadastrar(this.denuncia).subscribe({
-  //         next: () => Swal.fire('Denúncia criada com sucesso!'),
-  //         error: (erro) =>
-  //           Swal.fire(
-  //             'Erro!',
-  //             'Ocorreu um problema ao registrar sua denúncia.',
-  //             'error'
-  //           ),
-  //       });
-  //     }
-  //   });
-  // }
+  denunciar(pruuId: string): void {
+    Swal.fire({
+      title: 'Denunciar Pruu',
+      input: 'select',
+      inputOptions: {
+        [Motivo.SPAM]: 'Spam',
+        [Motivo.DISCURSO_ODIO]: 'Discurso de ódio',
+        [Motivo.CONTEUDO_INAPROPRIADO]: 'Conteúdo inapropriado',
+      },
+      inputLabel: 'Selecione o motivo da denúncia',
+      inputPlaceholder: 'O que não te agradou neste Pruu?',
+      showCancelButton: true,
+      confirmButtonText: 'Enviar',
+      cancelButtonText: 'Cancelar',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'Você precisa escolher um motivo para denunciar!';
+        }
+        return null;
+      },
+    }).then((resultado) => {
+
+      const pruu = this.pruus.find((p) => p.id == pruuId);
+
+      if (resultado.isConfirmed) {
+        this.denuncia = {
+          pruu: pruu!,
+          usuario: this.usuarioAutenticado,
+          motivo: resultado.value,
+          status: StatusDenuncia.PENDENTE,
+        };
+        this.denunciaService.cadastrar(this.denuncia).subscribe({
+          next: () => Swal.fire('Denúncia criada com sucesso!'),
+          error: (erro) =>
+            Swal.fire(
+              'Erro!',
+              'Ocorreu um problema ao registrar sua denúncia.',
+              'error'
+            ),
+        });
+      }
+    });
+  }
 
   usuariosQueCurtiram(pruu: Pruu): void {
     this.pruuService.pesquisarUsuariosQueCurtiram(pruu.id).subscribe({
@@ -204,10 +213,11 @@ throw new Error('Method not implemented.');
     });
   }
 
-  pesquisarPruusQueOUsuarioCurtiu(): void {
-    this.pruuSeletor.idUsuario = this.usuarioAutenticadoId;
-    this.pruuService.pesquisarComFiltro(this.pruuSeletor).subscribe({
+  pesquisarPruusCurtidosPeloUsuario(): void {
+    console.log(this.usuarioAutenticadoId);
+    this.pruuService.pesquisarPruusCurtidosPeloUsuario(this.usuarioAutenticadoId).subscribe({
       next: (pruus) => {
+        console.log(pruus);
         this.pruus = pruus;
         this.filtroAtivo = true;
       },
@@ -215,7 +225,7 @@ throw new Error('Method not implemented.');
     });
   }
 
-  excluir(pruu: Pruu): void {
+  excluir(pruuId: string): void {
     Swal.fire({
       title: 'Tem certeza?',
       text: 'Esta ação não pode ser desfeita!',
@@ -225,10 +235,12 @@ throw new Error('Method not implemented.');
       cancelButtonText: 'Cancelar',
     }).then((resultado) => {
       if (resultado.isConfirmed) {
-        this.pruuService.excluir(pruu.id, pruu.usuario.id).subscribe({
+        const pruu = this.pruus.find((p) => p.id == pruuId);
+
+        this.pruuService.excluir(pruu!.id).subscribe({
           next: () => {
             // Remove o Pruu da lista localmente
-            this.pruus = this.pruus.filter((p) => p.id !== pruu.id);
+            this.pruus = this.pruus.filter((p) => p.id !== pruu!.id);
             Swal.fire(
               'Excluído!',
               'O Pruu foi excluído com sucesso.',
@@ -249,5 +261,10 @@ throw new Error('Method not implemented.');
     const date = new Date(data);
     date.setHours(0, 0, 0, 0); // Define a hora para 00:00:00
     return date; // Retorna um objeto Date
+  }
+
+  openModal(pruu: Pruu) {
+    console.log('Pruu selecionado:', pruu);
+    this.selectedPruu = pruu;
   }
 }

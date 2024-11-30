@@ -4,7 +4,6 @@ import { Pruu } from "./pruu";
 import { Usuario } from "./usuario";
 
 export class Denuncia {
-  id!: number;
   pruu!: Pruu;
   usuario!: Usuario;
   motivo!: Motivo;

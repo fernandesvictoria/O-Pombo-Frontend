@@ -5,6 +5,7 @@ import { tap } from 'rxjs/operators';
 import { UsuarioDTO } from '../model/usuario-dto';
 import { Usuario } from '../model/usuario';
 import { jwtDecode } from 'jwt-decode';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ import { jwtDecode } from 'jwt-decode';
 export class LoginService {
   private readonly API = 'http://localhost:8080/pombo/auth';
 
-  constructor(private httpCliente: HttpClient) { }
+  constructor(private httpCliente: HttpClient, private cookieService: CookieService) { }
 
   autenticar(dto: UsuarioDTO): Observable<HttpResponse<string>> {
     const authHeader = 'Basic ' + btoa(`${dto.login}:${dto.senha}`);
@@ -31,13 +32,13 @@ export class LoginService {
     return this.httpCliente.post<any>(`${this.API}/novo`, usuario);
   }
 
-  // COLOCAR NO NAVBAR PRA DESLOGAR
   sair() {
+    this.cookieService.delete('tokenUsuarioAutenticado');
     localStorage.removeItem('tokenUsuarioAutenticado');
   }
 
   estaAutenticado(): boolean {
-    const token = localStorage.getItem('tokenUsuarioAutenticado');
+    const token = this.cookieService.get('tokenUsuarioAutenticado');
     return !!token;
   }
 }

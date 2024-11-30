@@ -8,7 +8,7 @@ export class Usuario {
   email!: string;
   cpf!: string;
   senha!: string;
-  fotoDePerfil!: string; // URL da imagem
+  fotoDePerfil!: string;
   perfil!: Perfil;
   idSessao!: string;
   isAdmin!: boolean;
