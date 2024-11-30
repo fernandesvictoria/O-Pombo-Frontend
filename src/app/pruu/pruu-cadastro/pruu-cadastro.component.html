@@ -14,14 +14,9 @@
         <style>
           #textoPruu::placeholder {
             color: #d7d6d6;
-            /* Cor desejada para o texto do placeholder */
+
           }
         </style>
-
-        <div class="mb-3">
-          <label for="fotoDePerfil" class="form-label text-white">Foto de Perfil</label>
-          <input type="file" id="fotoDePerfil" class="form-control" (change)="onFileSelected($event)" />
-        </div>
         <div *ngIf="selectedFile" class="row mb-3">
           <div class="col-md-12 text-center">
             <div class="preview-container">
@@ -34,7 +29,8 @@
           <label for="fotoPruu" class="form-label">
             <i class="bi bi-camera" style="font-size: 30px; cursor: pointer; color: #1d99ed;"></i>
           </label>
-          <input type="file" id="fotoPruu" class="form-control" accept="image/*" style="display: none;" />
+          <input type="file" id="fotoPruu" class="form-control" accept="image/*" style="display: none;"
+            (change)="onFileSelected($event)" />
         </div>
 
         <div class="text-center">
@@ -48,37 +44,3 @@
     </div>
   </div>
 </div>
-
-
-<!-- <div class="container-fluid"
-  style="background-color: #080404; height: 100vh; color: white; padding-top: 40px; padding-left: 50vh;">
-  <div class="card mb-4 shadow-sm"
-    style="background-color: #080404; color: white; border: 1px solid #888888; max-width: 600px; margin: 0 auto;">
-    <div class="card-body">
-      <form #ngForm="ngForm">
-        <div class="mb-3">
-          <textarea id="textoPruu" class="form-control" [(ngModel)]="pruu.texto" placeholder="O que está acontecendo?"
-            name="texto" rows="4" required
-            style="background-color: #080404; color: white; border: none; border-bottom: 1px solid #888888; border-radius: 0; font-size: 1.2rem;">
-          </textarea>
-        </div>
-
-        <div class="mb-3">
-          <button class="btn text-white" (click)="onFileSelected($event)" aria-label="Upload de imagem"></button>
-          <label for="fotoPruu" class="form-label">
-
-            <i class="bi bi-camera" style="font-size: 30px; cursor: pointer; color: #1d99ed;"></i>
-          </label>
-          <input type="file" id="fotoPruu" class="form-control" accept="image/*" style="display: none;" />
-        </div>
-
-        <div class="text-center">
-          <button type="submit" class="btn btn-outline-success col-md-3" (click)="inserir()"
-            style="background-color: #1d99ed; border-radius: 20px;">
-            Pruuzar
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div> -->
