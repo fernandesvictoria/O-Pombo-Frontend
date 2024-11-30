@@ -10,21 +10,26 @@ import Swal from 'sweetalert2';
 })
 export class PruuCadastroComponent implements OnInit {
   pruu: Pruu = new Pruu();
+  public selectedFile: File | null = null;
+  public imagePreview: string | ArrayBuffer | null = null;
 
   constructor(
     private pruuService: PruuService,
     private router: Router
-  ) { }
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
+
 
   public cadastrar(): void {
-    console.log(this.pruu); // Verifique no console se os dados estão corretos
     this.pruuService.cadastrar(this.pruu).subscribe({
-      next: () => {
+      next: (response) => {
         Swal.fire('Sucesso', 'Pruu cadastrado com sucesso!', 'success');
-        this.router.navigate(['/pruu']);
+        if (this.selectedFile) {
+          this.uploadImagem(response.id);
+        } else {
+          this.voltar();
+        }
       },
       error: erro => {
         Swal.fire('Erro', 'Erro ao cadastrar o Pruu. Tente novamente.', 'error');
@@ -33,7 +38,52 @@ export class PruuCadastroComponent implements OnInit {
     });
   }
 
+
   public cancelar(): void {
+    this.router.navigate(['/pruu']);
+  }
+
+  // seleciona arquivo
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file && file.size <= 10 * 1024 * 1024) {
+      this.selectedFile = file;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result;
+      };
+      reader.readAsDataURL(file);
+    } else {
+      alert('Tamanho de arquivo não permitido! Máximo: 10MB.');
+      this.selectedFile = null;
+      this.imagePreview = null;
+    }
+  }
+
+  uploadImagem(idPruu: string): void {
+    if (!idPruu) {
+      Swal.fire('Erro', 'ID do Pruu não encontrado!', 'error');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('fotoDePerfil', this.selectedFile!, this.selectedFile!.name);
+    formData.append('idPruu', idPruu);
+
+    this.pruuService.salvarFotoPruu(formData).subscribe({
+      next: () => {
+        Swal.fire('Imagem carregada com sucesso!', '', 'success');
+        this.voltar();
+      },
+      error: (erro) => {
+        Swal.fire('Erro ao fazer upload da imagem: ' + erro.error.message, 'error');
+      },
+    });
+  }
+
+  // Função para voltar para a tela de listagem
+  voltar(): void {
     this.router.navigate(['/pruu']);
   }
 }

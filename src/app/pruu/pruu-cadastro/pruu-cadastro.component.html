@@ -17,6 +17,19 @@
             /* Cor desejada para o texto do placeholder */
           }
         </style>
+
+        <div class="mb-3">
+          <label for="fotoDePerfil" class="form-label text-white">Foto de Perfil</label>
+          <input type="file" id="fotoDePerfil" class="form-control" (change)="onFileSelected($event)" />
+        </div>
+        <div *ngIf="selectedFile" class="row mb-3">
+          <div class="col-md-12 text-center">
+            <div class="preview-container">
+              <img [src]="imagePreview" alt="Pré-visualização" class="img-fluid rounded shadow-sm"
+                style="max-width: 200px; max-height: 300px; object-fit: contain;" />
+            </div>
+          </div>
+        </div>
         <div class="mb-3">
           <label for="fotoPruu" class="form-label">
             <i class="bi bi-camera" style="font-size: 30px; cursor: pointer; color: #1d99ed;"></i>
