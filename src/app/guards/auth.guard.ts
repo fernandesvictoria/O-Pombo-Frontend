@@ -18,6 +18,7 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
+    console.log(this.authService.isAdmin())
     if (this.authService.isAdmin()) {
       return true;
     } else {
@@ -26,15 +27,3 @@ export class AuthGuard implements CanActivate {
     }
   }
 }
-
-export const canActivateGuard: CanActivateFn = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-) => {
-  if ((inject(AuthService) as AuthService).isAdmin()) {
-    return true;
-  } else {
-    inject(Router).navigate(['/pruu']); 
-    return false;
-  }
-};

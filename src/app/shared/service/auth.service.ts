@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { Usuario } from '../model/usuario';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,15 +9,14 @@ import { Usuario } from '../model/usuario';
 export class AuthService {
   private ehAdministrador: boolean = false;
 
-  constructor() {
-    this.isAdmin();
-  }
+  constructor(private cookieService: CookieService) { }
 
   isAdmin(): boolean {
-    const token = localStorage.getItem('tokenUsuarioAutenticado');
+    const token = this.cookieService.get('tokenUsuarioAutenticado');
     if (token) {
       const tokenJSON: any = jwtDecode(token);
-      return this.ehAdministrador = tokenJSON?.roles === 'ADMINISTRADOR';
+      console.log(tokenJSON);
+      return this.ehAdministrador = tokenJSON?.perfil === 'ADMINISTRADOR';
     }
     return this.ehAdministrador = false;
   }

@@ -6,6 +6,7 @@ import { UsuarioDTO } from '../../shared/model/usuario-dto';
 import { LoginService } from '../../shared/service/login.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,10 @@ export class LoginComponent {
   constructor(
     private service: LoginService,
     private router: Router,
-  ) { }
+    private cookieService: CookieService
+  ) {
+      this.cookieService.delete('tokenUsuarioAutenticado');
+    }
 
   public logar() {
     this.service.autenticar(this.dto).subscribe({
@@ -30,6 +34,8 @@ export class LoginComponent {
         const token: string = jwt.body + '';
         localStorage.setItem('tokenUsuarioAutenticado', token);
 
+        this.cookieService.set('tokenUsuarioAutenticado', token, 1);
+
         this.router.navigate(['pruu']);
       },
       error: erro => {
@@ -37,7 +43,7 @@ export class LoginComponent {
         if (erro.status === 401) {
           mensagem = 'Usuário ou senha inválidos';
         } else {
-          mensagem = erro.error || 'Ocorreu um erro inesperado';
+          mensagem = erro.mensagem || 'Ocorreu um erro inesperado';
         }
         Swal.fire('Erro', mensagem, 'error');
       }

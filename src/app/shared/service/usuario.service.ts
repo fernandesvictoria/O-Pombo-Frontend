@@ -16,7 +16,6 @@ export class UsuarioService {
     return this.httpClient.put(`${this.API}/atualizar`, usuarioEditado);
   }
 
-
   excluir(idUsuario: string): Observable<boolean> {
     return this.httpClient.delete<boolean>(`${this.API}/excluir/${idUsuario}`)
   }

@@ -2,14 +2,17 @@ import { HttpErrorResponse, HttpInterceptorFn } from "@angular/common/http";
 import { inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { catchError, throwError } from "rxjs";
+import { AuthService } from "../shared/service/auth.service";
+import { CookieService } from "ngx-cookie-service";
 
 export const RequestInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
+  const cookieService: CookieService = inject(CookieService);
   let authReq = req;
 
-  if (typeof localStorage !== 'undefined') {
-    const tokenUsuarioAutenticado = localStorage.getItem('tokenUsuarioAutenticado');
-   
+  if (cookieService) {
+    const tokenUsuarioAutenticado = cookieService.get('tokenUsuarioAutenticado');
+
     if (tokenUsuarioAutenticado) {
       authReq = req.clone({
         setHeaders: {
