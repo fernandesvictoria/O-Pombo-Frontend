@@ -24,12 +24,12 @@ export class LoginComponent {
     private router: Router,
     private cookieService: CookieService
   ) {
-      this.cookieService.delete('tokenUsuarioAutenticado');
-    }
+    this.cookieService.delete('tokenUsuarioAutenticado');
+  }
 
   public logar() {
     this.service.autenticar(this.dto).subscribe({
-      next: jwt => {
+      next: (jwt) => {
         Swal.fire('Sucesso', 'Usuário autenticado com sucesso', 'success');
         const token: string = jwt.body + '';
         localStorage.setItem('tokenUsuarioAutenticado', token);
@@ -38,7 +38,7 @@ export class LoginComponent {
 
         this.router.navigate(['pruu']);
       },
-      error: erro => {
+      error: (erro) => {
         let mensagem: string;
         if (erro.status === 401) {
           mensagem = 'Usuário ou senha inválidos';
@@ -46,7 +46,7 @@ export class LoginComponent {
           mensagem = erro.mensagem || 'Ocorreu um erro inesperado';
         }
         Swal.fire('Erro', mensagem, 'error');
-      }
+      },
     });
   }
 
