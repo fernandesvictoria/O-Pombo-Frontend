@@ -73,7 +73,6 @@ export class PruuCadastroComponent implements OnInit {
 
     this.pruuService.salvarFotoPruu(formData).subscribe({
       next: () => {
-        Swal.fire('Imagem carregada com sucesso!', '', 'success');
         this.voltar();
       },
       error: (erro) => {
