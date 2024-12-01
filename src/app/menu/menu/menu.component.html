@@ -12,15 +12,15 @@
       <nav>
         <a href="/pruu" class="w-100 mb-5 text-white fw-bold text-start d-block"
           style="text-decoration: none; font-size: 1.1rem; padding-left: 35px;">Feed</a>
-        <a href="/usuario" class="w-100 mb-3 text-white fw-bold text-start d-block"
+        <a href="/usuario" class="w-100 mb-5 text-white fw-bold text-start d-block"
           style="text-decoration: none; font-size: 1.1rem; padding-left: 35px;">Editar Perfil</a>
-        <a href="/denuncia" class="w-100 mb-3 text-white fw-bold text-start d-block"style="text-decoration: none; font-size: 1.1rem; padding-left: 35px;" *ngIf="isAdmin()">Ver Denúncias</a>
+        <a href="/denuncia" class="w-100 mb-5 text-white fw-bold text-start d-block"style="text-decoration: none; font-size: 1.1rem; padding-left: 35px;" *ngIf="isAdmin()">Ver Denúncias</a>
         <a href="/usuario/listar" class="w-100 mb-3 text-white fw-bold text-start d-block" style="text-decoration: none; font-size: 1.1rem; padding-left: 35px;" *ngIf="isAdmin()">Ver Usuários</a>
       </nav>
     </div>
     <div class="d-flex flex-column align-items-center mb-4" style="margin-top: auto;">
-      <a href="/pruu/cadastrar" class="btn btn-primary w-75 mb-3"
-        style="background-color: #1d99ed; border-radius: 20px;">
+      <a href="/pruu/cadastrar" class="btn  w-75 mb-3"
+        style="background-color: #9c6f99; border-radius: 20px;color: white;">
         <i class="bi bi-pencil"></i>
         Post</a>
       <button (click)="sair()" class="btn btn-danger w-75 mb-3" style="border-radius: 20px;">Logout</button>

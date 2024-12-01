@@ -1,4 +1,7 @@
-<div class="container-fluid g-5" style="background-color: #282c34; min-height: 100vh;">
+<app-menu></app-menu>
+
+<!-- Container do conteúdo principal -->
+<div class="container-flex" style="background-color: #080404; min-height: 100vh; padding: 30px; margin-left: 300px;">
   <div class="row text-center p-2 align-items-center justify-content-center">
     <div class="col col-md-10 pt-5">
       <div class="card border-dark rounded-3" style="border-radius: 20px; overflow: hidden;">
@@ -7,13 +10,20 @@
         </div>
         <div class="card-body bg-black">
           <form class="mb-4 d-flex justify-content-center" (ngSubmit)="aplicarFiltros()">
-            <input [(ngModel)]="usuarioSeletor.nome" name="nomeFiltro" type="text" class="form-control border-dark mx-2" placeholder="Filtrar por Nome" style="width: 200px; border-radius: 20px; text-align: center; padding: 10px;" />
-            <input [(ngModel)]="usuarioSeletor.email" name="emailFiltro" type="email" class="form-control border-dark mx-2" placeholder="Filtrar por E-mail" style="width: 200px; border-radius: 20px; text-align: center; padding: 10px;" />
-            <button type="submit" class="btn btn-primary mx-2" style="background-color: #1d99ed; padding: 10px 20px; border-radius: 30px;">
-              Aplicar Filtros
+
+            <input [(ngModel)]="usuarioSeletor.nome" name="nomeFiltro" type="text" class="form-control border-dark mx-2"
+              placeholder="Filtrar por Nome"
+              style="width: 200px; border-radius: 20px; text-align: center; padding: 10px;" />
+            <input [(ngModel)]="usuarioSeletor.email" name="emailFiltro" type="email"
+              class="form-control border-dark mx-2" placeholder="Filtrar por E-mail"
+              style="width: 200px; border-radius: 20px; text-align: center; padding: 10px;" />
+            <button type="submit" class="btn btn-primary mx-2"
+              style="background-color: #1d99ed; padding: 10px 20px; border-radius: 30px;">
+              <i class="bi bi-search"></i> Buscar
             </button>
-            <button type="button" class="btn btn-secondary mx-2" style="padding: 10px 20px; border-radius: 30px;" (click)="limparFiltros()">
-              Limpar
+            <button type="button" class="btn btn-secondary mx-2" style="padding: 10px 20px; border-radius: 30px;"
+              (click)="limparFiltros()">
+              <i class="bi bi-trash"></i>Limpar
             </button>
           </form>
           <div *ngIf="mensagemErro" class="alert alert-danger text-center">
@@ -27,7 +37,7 @@
                   <th>E-mail</th>
                   <th>CPF</th>
                   <th>Foto de Perfil</th>
-                  <th>Ações</th>
+                  <!-- <th>Ações</th> -->
                 </tr>
               </thead>
               <tbody>
@@ -36,10 +46,20 @@
                   <td>{{ usuario.email }}</td>
                   <td>{{ usuario.cpf }}</td>
                   <td>
-                    <img [src]="usuario.fotoDePerfil || 'assets/images/profile.jpg'" alt="Foto de Perfil" class="img-thumbnail" style="max-width: 50px; border-radius: 50%; object-fit: cover;">
+                    <img *ngIf="usuario.fotoDePerfil; else imagemPadrao"
+                      [src]="'data:image/jpeg;base64,' + usuario.fotoDePerfil" alt="Imagem de Perfil"
+                      class="img-fluid"
+                      style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: none;">
+
+                    <ng-template #imagemPadrao>
+                      <img [src]="'assets/images/egg.jpg'" alt="Imagem padrão" class="img-fluid"
+                        style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: none;">
+                    </ng-template>
+
                   </td>
-                  <td>
-                  </td>
+                  <!-- <td>
+
+                  </td> -->
                 </tr>
               </tbody>
             </table>

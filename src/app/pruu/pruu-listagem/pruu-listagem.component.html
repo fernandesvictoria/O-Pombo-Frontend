@@ -52,7 +52,8 @@
     <button type="button" class="btn btn-light" (click)="aplicarFiltros()" style="border-radius: 20px; width: 150px;">
       <i class="bi bi-search"></i> Buscar
     </button>
-    <button class="btn btn-primary" [routerLink]="'/pruu/cadastrar'" style="border-radius: 20px; width: 120px;">
+    <button class="btn" [routerLink]="'/pruu/cadastrar'"
+      style="border-radius: 20px; width: 120px;background-color: #9c6f99;color: white;">
       <i class="bi bi-pencil"></i> Post
     </button>
   </div>
@@ -78,7 +79,8 @@
             <!-- Botões de Data e Opções -->
             <div class="d-flex flex-column align-items-end" style="gap: 5px;">
               <!-- Botão de opções -->
-              <p class="text-white fs-4 mb-0" data-bs-toggle="modal" data-bs-target="#opcoesModal" style="cursor: pointer;" (click)="openModal(pruu)">
+              <p class="text-white fs-4 mb-0" data-bs-toggle="modal" data-bs-target="#opcoesModal"
+                style="cursor: pointer;" (click)="openModal(pruu)">
                 ...
               </p>
 
@@ -119,10 +121,12 @@
                 </div>
                 <div class="modal-body">
                   <div class="d-flex flex-column gap-3">
-                    <button class="btn btn-danger" *ngIf="selectedPruu?.usuario?.id === usuarioAutenticadoId" (click)="excluir(selectedPruu?.id)">
+                    <button class="btn btn-danger" *ngIf="selectedPruu?.usuario?.id === usuarioAutenticadoId"
+                      (click)="excluir(selectedPruu?.id)">
                       Excluir
                     </button>
-                    <button type="button" class="btn btn-primary" (click)="denunciar(selectedPruu?.id)">Denunciar</button>
+                    <button type="button" class="btn btn-primary"
+                      (click)="denunciar(selectedPruu?.id)">Denunciar</button>
                   </div>
                 </div>
               </div>

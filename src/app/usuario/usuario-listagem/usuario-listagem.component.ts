@@ -5,12 +5,13 @@ import { UsuarioSeletor } from '../../shared/seletor/usuario.seletor';
 import { UsuarioService } from '../../shared/service/usuario.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MenuModule } from '../../menu/menu.module';
 
 @Component({
   selector: 'app-usuario-listagem',
   templateUrl: './usuario-listagem.component.html',
   standalone: true,
-  imports: [FormsModule, RouterModule, CommonModule],
+  imports: [FormsModule, RouterModule, CommonModule,MenuModule],
 })
 export class UsuarioListagemComponent implements OnInit {
   usuarios: Usuario[] = [];
