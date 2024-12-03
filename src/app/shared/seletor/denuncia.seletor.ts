@@ -7,6 +7,6 @@ export class DenunciaSeletor extends BaseSeletor {
   idPruu!: string;
   motivo!: Motivo;
   status!: StatusDenuncia;
-  criadoEmInicio!: Date;
-  criadoEmFim!: Date;
+  criadoEmInicio!: string;
+  criadoEmFim!: string;
 }

@@ -12,12 +12,14 @@ import Swal from 'sweetalert2';
 import { StatusDenuncia } from '../../shared/model/enum/status-denuncia';
 import { jwtDecode } from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from '../../shared/service/auth.service';
 
 @Component({
   selector: 'app-pruu-listagem',
   templateUrl: './pruu-listagem.component.html',
 })
 export class PruuListagemComponent implements OnInit {
+  usuarioAdmin: boolean = false;
   usuarios: Usuario[] = [];
   pruus: Pruu[] = [];
   filtroAtivo: boolean = false;
@@ -39,9 +41,10 @@ export class PruuListagemComponent implements OnInit {
     private pruuService: PruuService,
     private denunciaService: DenunciaService,
     private usuarioService: UsuarioService,
+    private authService: AuthService,
     private router: Router,
     private cookieService: CookieService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     let token;
@@ -55,7 +58,8 @@ export class PruuListagemComponent implements OnInit {
         next: (usuario) => {
           this.usuarioAutenticado = usuario;
         },
-        error: (erro) => console.error('Erro ao buscar o usuário autenticado', erro),
+        error: (erro) =>
+          console.error('Erro ao buscar o usuário autenticado', erro),
       });
     }
 
@@ -93,7 +97,7 @@ export class PruuListagemComponent implements OnInit {
     this.pruuService.pesquisarComFiltro(this.pruuSeletor).subscribe({
       next: (pruus) => {
         this.pruus = [];
-        this.pruus = pruus
+        this.pruus = pruus;
       },
       error: (erro) => console.error('Erro ao buscar Pruus', erro),
     });
@@ -166,7 +170,6 @@ export class PruuListagemComponent implements OnInit {
         return null;
       },
     }).then((resultado) => {
-
       const pruu = this.pruus.find((p) => p.id == pruuId);
 
       if (resultado.isConfirmed) {
@@ -215,14 +218,20 @@ export class PruuListagemComponent implements OnInit {
 
   pesquisarPruusCurtidosPeloUsuario(): void {
     console.log(this.usuarioAutenticadoId);
-    this.pruuService.pesquisarPruusCurtidosPeloUsuario(this.usuarioAutenticadoId).subscribe({
-      next: (pruus) => {
-        console.log(pruus);
-        this.pruus = pruus;
-        this.filtroAtivo = true;
-      },
-      error: (erro) => console.error('Erro ao pesquisar os Pruus curtidos pelo usuário', erro),
-    });
+    this.pruuService
+      .pesquisarPruusCurtidosPeloUsuario(this.usuarioAutenticadoId)
+      .subscribe({
+        next: (pruus) => {
+          console.log(pruus);
+          this.pruus = pruus;
+          this.filtroAtivo = true;
+        },
+        error: (erro) =>
+          console.error(
+            'Erro ao pesquisar os Pruus curtidos pelo usuário',
+            erro
+          ),
+      });
   }
 
   excluir(pruuId: string): void {
@@ -246,6 +255,7 @@ export class PruuListagemComponent implements OnInit {
               'O Pruu foi excluído com sucesso.',
               'success'
             );
+            window.location.reload()
           },
           error: (erro) => {
             console.error('Erro ao excluir o Pruu:', erro);
@@ -257,14 +267,24 @@ export class PruuListagemComponent implements OnInit {
   }
 
   // Função para ajustar a data para o início do dia (00:00:00)
-  ajustarDataParaInicioDoDia(data: Date): Date {
-    const date = new Date(data);
-    date.setHours(0, 0, 0, 0); // Define a hora para 00:00:00
-    return date; // Retorna um objeto Date
+  ajustarDataParaInicioDoDia(date: string): string {
+    // Verifica se a data foi fornecida no formato correto
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      throw new Error('A data deve estar no formato yyyy-MM-dd');
+    }
+
+    // Adiciona o horário 00:00:00 à data
+    const formattedDate = `${date}T00:00:00`;
+    return formattedDate; // Exemplo: "2024-12-02T00:00:00"
   }
 
   openModal(pruu: Pruu) {
     console.log('Pruu selecionado:', pruu);
     this.selectedPruu = pruu;
+  }
+
+  public isAdmin(): boolean {
+    this.usuarioAdmin = this.authService.isAdmin();
+    return this.usuarioAdmin;
   }
 }

@@ -30,7 +30,7 @@ export class PruuService {
   }
 
   pesquisarTodos(): Observable<Array<Pruu>> {
-    return this.httpClient.post<Array<Pruu>>(`${this.API}/filtrar`, {});
+    return this.httpClient.get<Array<Pruu>>(`${this.API}/todos`);
   }
 
   pesquisarPorId(idPruu: string): Observable<Pruu> {

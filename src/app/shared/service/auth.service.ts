@@ -15,7 +15,6 @@ export class AuthService {
     const token = this.cookieService.get('tokenUsuarioAutenticado');
     if (token) {
       const tokenJSON: any = jwtDecode(token);
-      console.log(tokenJSON);
       return this.ehAdministrador = tokenJSON?.perfil === 'ADMINISTRADOR';
     }
     return this.ehAdministrador = false;

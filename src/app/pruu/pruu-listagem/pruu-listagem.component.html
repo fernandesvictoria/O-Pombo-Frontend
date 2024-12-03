@@ -53,7 +53,7 @@
       <i class="bi bi-search"></i> Buscar
     </button>
     <button class="btn" [routerLink]="'/pruu/cadastrar'"
-      style="border-radius: 20px; width: 120px;background-color: #9c6f99;color: white;">
+      style="border-radius: 20px; width: 120px;background-color: #9c6f99;color: white;" *ngIf="!isAdmin()">
       <i class="bi bi-pencil"></i> Post
     </button>
   </div>

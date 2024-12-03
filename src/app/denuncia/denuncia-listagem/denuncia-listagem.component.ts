@@ -27,6 +27,7 @@ export class DenunciaListagemComponent implements OnInit {
   novoStatus: StatusDenuncia = StatusDenuncia.PENDENTE;
   denuncia!: Denuncia;
   usuarios: Usuario[] = [];
+  motivos: string[] = [];
 
   constructor(
     private denunciaService: DenunciaService,
@@ -37,6 +38,7 @@ export class DenunciaListagemComponent implements OnInit {
   ngOnInit(): void {
     this.pesquisarTodas();
     this.buscarUsuarios();
+    this.motivos = Object.keys(Motivo).filter((key) => isNaN(Number(key)));
   }
 
   pesquisarTodas(): void {
@@ -47,6 +49,23 @@ export class DenunciaListagemComponent implements OnInit {
   }
 
   pesquisarComFiltros(): void {
+    // Ajusta as datas para garantir que a hora seja 00:00
+    if (this.denunciaSeletor.criadoEmInicio) {
+     this.denunciaSeletor.criadoEmInicio = this.ajustarDataParaInicioDoDia(
+        this.denunciaSeletor.criadoEmInicio
+      );
+    }
+    if (this.denunciaSeletor.criadoEmFim) {
+      this.denunciaSeletor.criadoEmFim = this.ajustarDataParaInicioDoDia(
+        this.denunciaSeletor.criadoEmFim
+      );
+    }
+
+    console.log('Data de início:', this.denunciaSeletor.criadoEmInicio);
+    console.log('Data de fim:', this.denunciaSeletor.criadoEmFim);
+
+    console.log('Motivo', this.denunciaSeletor.motivo)
+
     this.denunciaService.pesquisarComFiltros(this.denunciaSeletor).subscribe({
       next: (denuncias) => {
         this.denuncias = denuncias;
@@ -56,7 +75,7 @@ export class DenunciaListagemComponent implements OnInit {
     });
   }
 
-  
+
   private buscarUsuarios() {
     this.usuarioService.pesquisarTodos().subscribe(
       (r) => {
@@ -92,5 +111,17 @@ export class DenunciaListagemComponent implements OnInit {
 
   analisarDenuncia(idDenuncia: string): void {
     this.router.navigate([`denuncia/${idDenuncia}`]);
+  }
+
+  // Função para ajustar a data para o início do dia (00:00:00)
+  ajustarDataParaInicioDoDia(date: string): string {
+    // Verifica se a data foi fornecida no formato correto
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      throw new Error('A data deve estar no formato yyyy-MM-dd');
+    }
+
+    // Adiciona o horário 00:00:00 à data
+    const formattedDate = `${date}T00:00:00`;
+    return formattedDate; // Exemplo: "2024-12-02T00:00:00"
   }
 }

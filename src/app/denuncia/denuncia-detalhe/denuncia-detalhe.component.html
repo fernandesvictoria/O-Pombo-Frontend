@@ -3,21 +3,44 @@
 <div style="background-color: #080404; min-height: 100vh; padding: 50px; margin-left: 25%; color: white;">
   <h2 class="text-center mb-4">Detalhes da Denúncia</h2>
 
-  <div class="card shadow-sm text-light" style="background-color: #080808; border: 1px solid #413e3e;">
-    <div class="card-body">
-      <!-- Detalhes da Denúncia -->
-      <div class="d-flex justify-content-between align-items-center">
-        <h5 class="card-title mb-0">{{denuncia.usuario.nome}}</h5>
-        <p class="card-text text-end mb-2"><small class="text-light">{{denuncia.pruu.criadoEm}}</small></p>
+
+  <div class="card-body">
+    <!-- Detalhes da Denúncia -->
+
+
+    <div class="card shadow-sm text-light" style="background-color: #080808; border: 1px solid #413e3e;">
+      <div class="card-body">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h5 class="card-title mb-0;">{{denuncia.nomeUsuario}}</h5>
+          <p class="card-text text-end mb-2"><small class="text-light">{{denuncia.criadoEm | date:'dd/MM/yyyyHH:mm'}}</small></p>
+
+        </div>
+
+        <p class="card-text">{{denuncia.textoPruu}}</p>
+        <img *ngIf="denuncia.imagemPruu" [src]="'data:image/jpeg;base64,' + denuncia.imagemPruu" alt="Imagem do Post"
+          class="img-fluid rounded" style="max-height: 300px; object-fit: cover; width: 100%;" />
+
+        <p class="card-text mb-1"><strong>Motivo da denúncia: </strong>{{denuncia.motivo}}</p>
+        <p class="card-text"><small class="text-dark-emphasis">Denunciado por: {{denuncia.nomeDenunciante}}</small>
+        </p>
+
+        <!-- Opções de Ação -->
+        <div class="d-flex gap-2 justify-content-center">
+          <button class="btn w-50" style=" background-color: #9c6f99;border-radius: 20px; color: white;" (click)="rejeitarDenuncia()">
+            Rejeitar denúncia
+          </button>
+          <button class="btn w-50 btn-success" style="border-radius: 20px;" (click)="bloquearPruu()">
+            Bloquear pruu
+          </button>
+        </div>
       </div>
+    </div>
+  </div>
 
-      <p class="card-text">{{denuncia.pruu.texto}}</p>
 
-      <p class="card-text mb-1"><strong>Motivo da denúncia:</strong>{{denuncia.motivo}}</p>
-      <p class="card-text"><small class="text-dark-emphasis">Denunciado por: {{denuncia.usuario.nome}}</small></p>
 
-      <!-- Opções de Ação -->
-      <!-- <div class="d-flex gap-2 justify-content-center">
+  <!-- <div class="d-flex gap-2 justify-content-center">
         <button class="btn btn-danger" style="border-radius: 20px;" (click)="analisarDenuncia(denuncia.id, )">
           Bloquear
         </button>
@@ -26,11 +49,12 @@
         </button>
       </div> -->
 
-      <div class="d-flex justify-content-center mt-3">
-        <button class="btn btn-secondary" (click)="voltarParaListagem()" style="border-radius: 20px;">
-          Voltar para a lista
-        </button>
-      </div>
-    </div>
+
+  <div class="d-flex justify-content-center mt-3">
+    <button class="btn" (click)="voltarParaListagem()"
+      style="background-color: #9c6f99; border-radius: 20px;color: white;">
+      Voltar para a lista
+    </button>
+
   </div>
 </div>

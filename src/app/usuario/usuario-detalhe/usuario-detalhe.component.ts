@@ -114,6 +114,7 @@ export class UsuarioDetalheComponent implements OnInit {
     this.usuarioService.pesquisarPorId(idUsuario).subscribe({
       next: (usuario) => {
         this.usuario = usuario;
+        this.usuario.senha = '';
         this.carregando = false;
       },
       error: (erro) => {
