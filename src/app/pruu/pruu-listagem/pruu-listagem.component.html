@@ -141,14 +141,14 @@
         <label for="quantidadeRegistros">&nbsp;</label>
         <!-- Componente de paginação -->
         <ul class="pagination">
-          <li class="page-item"><button [disabled]="pruuSeletor.pagina == 1" class="page-link"
+          <li class="page-item"><button [disabled]="pruuSeletor.pagina == 1" style="color: white; background-color: #080404;" class="page-link"
               (click)="paginaAnterior()">Anterior</button></li>
 
           <!-- Botões com as páginas construídos dinamicamente -->
           <li class="page-item" *ngFor="let indice of criarArrayPaginas()" (click)="irParaPagina(indice)"><button
-              class="page-link">{{indice}}</button></li>
+              class="page-link" style="color: white; background-color: #080404;">{{indice}}</button></li>
 
-          <li class="page-item"><button [disabled]="pruuSeletor.pagina === totalPaginas - 1" class="page-link"
+          <li class="page-item"><button [disabled]="pruuSeletor.pagina === totalPaginas - 1"   style="color: white; background-color: #080404;"class="page-link"
               (click)="proximaPagina()">Próxima</button></li>
         </ul>
       </div>
