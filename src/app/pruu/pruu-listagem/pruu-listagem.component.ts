@@ -71,6 +71,37 @@ export class PruuListagemComponent implements OnInit {
     this.carregarMotivos();
   }
 
+  paginaAnterior(){
+    this.pruuSeletor.pagina--;
+    this.aplicarFiltros()
+  }
+
+  proximaPagina() {
+    this.pruuSeletor.pagina++;
+    this.aplicarFiltros()
+  }
+
+  irParaPagina(indicePagina: number) {
+    this.pruuSeletor.pagina = indicePagina;
+    this.pesquisarTodos();
+  }
+
+  // Método para criar um array de páginas para ser utilizado no ngFor do HTML
+  criarArrayPaginas(): any[] {
+    return Array(this.totalPaginas).fill(0).map((x, i) => i + 1);
+  }
+
+  public contarPaginas() {
+    this.pruuService.contarPaginas(this.pruuSeletor).subscribe(
+      resultado => {
+        this.totalPaginas = resultado;
+      },
+      erro => {
+        Swal.fire('Erro ao consultar total de páginas', erro.error, 'error');
+      }
+    );
+  }
+
   private carregarMotivos(): void {
     // Filtra para pegar apenas os valores que pertencem ao enum Motivo
     this.motivosDenuncia = Object.values(Motivo)
@@ -96,7 +127,7 @@ export class PruuListagemComponent implements OnInit {
   pesquisarTodos(): void {
     this.pruuService.pesquisarComFiltro(this.pruuSeletor).subscribe({
       next: (pruus) => {
-        this.pruus = [];
+        this.contarPaginas()
         this.pruus = pruus;
       },
       error: (erro) => console.error('Erro ao buscar Pruus', erro),

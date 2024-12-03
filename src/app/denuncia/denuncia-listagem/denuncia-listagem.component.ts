@@ -20,7 +20,6 @@ import { Usuario } from '../../shared/model/usuario';
   imports: [FormsModule, RouterModule, CommonModule, MenuModule],
 })
 export class DenunciaListagemComponent implements OnInit {
-  denuncias: Denuncia[] = [];
   dadosDenuncias: DenunciaDados[] = [];
   filtroAtivo: boolean = false;
   denunciaSeletor: DenunciaSeletor = new DenunciaSeletor();
@@ -28,6 +27,7 @@ export class DenunciaListagemComponent implements OnInit {
   denuncia!: Denuncia;
   usuarios: Usuario[] = [];
   motivos: string[] = [];
+  status: string[] = [];
 
   constructor(
     private denunciaService: DenunciaService,
@@ -39,6 +39,7 @@ export class DenunciaListagemComponent implements OnInit {
     this.pesquisarTodas();
     this.buscarUsuarios();
     this.motivos = Object.keys(Motivo).filter((key) => isNaN(Number(key)));
+    this.status = Object.keys(StatusDenuncia).filter((key) => isNaN(Number(key)));
   }
 
   pesquisarTodas(): void {
@@ -68,7 +69,7 @@ export class DenunciaListagemComponent implements OnInit {
 
     this.denunciaService.pesquisarComFiltros(this.denunciaSeletor).subscribe({
       next: (denuncias) => {
-        this.denuncias = denuncias;
+        this.dadosDenuncias = denuncias;
         this.filtroAtivo = true;
       },
       error: (erro) => console.error('Erro ao aplicar filtros', erro),

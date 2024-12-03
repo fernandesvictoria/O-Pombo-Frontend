@@ -29,6 +29,15 @@
         </select>
       </div>
 
+      <!-- Filtro por Status -->
+      <div class="row" style="margin-bottom: 5px;">
+        <label for="status" class="text-white">Status</label>
+        <select class="form-control text-white" [(ngModel)]="denunciaSeletor.status" name="status"
+          style="background-color: #202327; border-radius: 10px; width: 200px;">
+          <option *ngFor="let statu of status" [value]="statu">{{ statu }}</option>
+        </select>
+      </div>
+
       <!-- Filtro por Motivo -->
       <div class="row" style="margin-bottom: 5px;">
         <label for="motivo" class="text-white">Motivo</label>

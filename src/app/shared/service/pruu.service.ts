@@ -49,4 +49,8 @@ export class PruuService {
     return this.httpClient.get<Array<Pruu>>(`${this.API}/meus-likes/${idUsuario}`);
   }
 
+  contarPaginas(seletor: PruuSeletor): Observable<number> {
+    return this.httpClient.post<number>(this.API + '/total-paginas', seletor);
+  }
+
 }

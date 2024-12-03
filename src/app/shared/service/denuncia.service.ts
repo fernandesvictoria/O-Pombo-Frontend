@@ -21,10 +21,7 @@ export class DenunciaService {
   }
 
   atualizar(idDenuncia: string, status: StatusDenuncia): Observable<Denuncia> {
-    return this.httpClient.put<Denuncia>(
-      `${this.API}/atualizar/${idDenuncia}`,
-      status.toString
-    );
+    return this.httpClient.put<Denuncia>(`${this.API}/atualizar/${idDenuncia}`, status);
   }
 
   excluir(idDenuncia: string): Observable<boolean> {
@@ -39,8 +36,8 @@ export class DenunciaService {
     return this.httpClient.get<DenunciaDados>(this.API + `/${idDenuncia}`);
   }
 
-  pesquisarComFiltros(seletor: DenunciaSeletor): Observable<Array<Denuncia>> {
-    return this.httpClient.post<Array<Denuncia>>(
+  pesquisarComFiltros(seletor: DenunciaSeletor): Observable<Array<DenunciaDados>> {
+    return this.httpClient.post<Array<DenunciaDados>>(
       `${this.API}/filtrar`,
       seletor
     );
